@@ -1,0 +1,21 @@
+---
+import AnimatedSection from '@/components/AnimatedSection.astro';
+import SectionEyebrow from '@/components/SectionEyebrow.astro';
+import {t, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const {locale} = Astro.props;
+---
+
+<AnimatedSection id="about" class="bg-surface/20">
+  <div class="mx-auto max-w-2xl">
+    <SectionEyebrow>{t(locale, 'About', 'eyebrow')}</SectionEyebrow>
+    <h2 class="mb-4 font-display text-2xl text-ink">{t(locale, 'About', 'heading')}</h2>
+    <p class="max-w-xl font-body leading-relaxed text-ink-muted">
+      {t(locale, 'About', 'paragraph')}
+    </p>
+  </div>
+</AnimatedSection>

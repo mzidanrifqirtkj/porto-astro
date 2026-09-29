@@ -1,0 +1,18 @@
+---
+import SocialIcons from '@/components/SocialIcons.astro';
+import {t, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const {locale} = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border px-6 py-10">
+  <div class="mx-auto flex max-w-2xl flex-col items-center gap-4 sm:flex-row sm:justify-between">
+    <p class="font-mono text-xs text-ink-muted">{t(locale, 'Footer', 'copyright', {year})}</p>
+    <SocialIcons locale={locale} showEmail />
+  </div>
+</footer>

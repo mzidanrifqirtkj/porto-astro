@@ -1,0 +1,38 @@
+---
+interface Props {
+  id: string;
+  class?: string;
+}
+
+const {id, class: className} = Astro.props;
+---
+
+<section data-animate id={id} class:list={['scroll-mt-24 px-6 py-16', className]}>
+  <slot />
+</section>
+
+<style is:global>
+  /* Only hide content when JavaScript is running, so a no-JS visitor still sees
+     the whole page. The `js` class is set by an inline script in BaseLayout. */
+  .js [data-animate] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.5s ease-out,
+      transform 0.5s ease-out;
+  }
+
+  .js [data-animate].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js [data-animate],
+    .js [data-animate].is-visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

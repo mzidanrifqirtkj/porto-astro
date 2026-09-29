@@ -1,0 +1,155 @@
+---
+import type {ContributionData} from '@/lib/types';
+
+interface Props {
+  data: ContributionData;
+  labels: {
+    less: string;
+    more: string;
+    github: string;
+    gitlab: string;
+  };
+}
+
+const {data, labels} = Astro.props;
+const {days, totals} = data;
+
+const LEVELS = 4;
+
+function levelFor(total: number): number {
+  if (total <= 0) return 0;
+  if (total <= 2) return 1;
+  if (total <= 5) return 2;
+  if (total <= 9) return 3;
+  return LEVELS;
+}
+
+const byDate = new Map(days.map((day) => [day.date, day]));
+
+type Cell = {date: string | null; github: number; gitlab: number; level: number};
+
+// Lay the days out in week columns starting on Sunday, matching the reference layout.
+const weeks: Cell[][] = [];
+if (days.length > 0) {
+  const start = new Date(`${days[0].date}T00:00:00Z`);
+  const end = new Date(`${days[days.length - 1].date}T00:00:00Z`);
+
+  const cursor = new Date(start);
+  cursor.setUTCDate(cursor.getUTCDate() - start.getUTCDay());
+
+  while (cursor <= end) {
+    const week: Cell[] = [];
+    for (let i = 0; i < 7; i += 1) {
+      const date = cursor.toISOString().slice(0, 10);
+      const day = byDate.get(date);
+      week.push({
+        date: day ? date : null,
+        github: day?.github ?? 0,
+        gitlab: day?.gitlab ?? 0,
+        level: levelFor((day?.github ?? 0) + (day?.gitlab ?? 0))
+      });
+      cursor.setUTCDate(cursor.getUTCDate() + 1);
+    }
+    weeks.push(week);
+  }
+}
+
+// Month label above the first column that contains the 1st of a month.
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const monthLabels = weeks.map((week, index) => {
+  const firstOfMonth = week.find((cell) => cell.date?.endsWith('-01'));
+  if (firstOfMonth) return MONTHS[new Date(`${firstOfMonth.date}T00:00:00Z`).getUTCMonth()];
+  if (index === 0 && week[0].date) {
+    return MONTHS[new Date(`${week[0].date}T00:00:00Z`).getUTCMonth()];
+  }
+  return '';
+});
+
+const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+const scale = Array.from({length: LEVELS + 1}, (_, index) => index);
+---
+
+<div class="overflow-x-auto pb-1">
+  <div class="inline-flex flex-col gap-1.5" style="min-width: max-content">
+    <div class="flex gap-[3px]" aria-hidden="true">
+      <span class="w-8 shrink-0"></span>
+      {
+        monthLabels.map((label) => (
+          <span class="relative w-3 shrink-0 font-mono text-[10px] text-ink-muted">
+            {label && <span class="absolute left-0">{label}</span>}
+          </span>
+        ))
+      }
+    </div>
+
+    <div class="flex gap-[3px]">
+      <div class="flex w-8 shrink-0 flex-col gap-[3px]" aria-hidden="true">
+        {
+          DAY_LABELS.map((label) => (
+            <span class="flex h-3 items-center pr-1 font-mono text-[10px] leading-none text-ink-muted">
+              {label}
+            </span>
+          ))
+        }
+      </div>
+
+      {
+        weeks.map((week) => (
+          <div class="flex flex-col gap-[3px]">
+            {week.map((cell) => (
+              <span
+                title={
+                  cell.date
+                    ? `${cell.date} — ${cell.github} ${labels.github} · ${cell.gitlab} ${labels.gitlab}`
+                    : undefined
+                }
+                class:list={[
+                  'h-3 w-3 rounded-[3px] border border-border',
+                  cell.level === 0 && 'bg-surface',
+                  cell.level > 0 && cell.gitlab > 0 && 'border-signal/40 bg-signal/70',
+                  cell.level > 0 && cell.gitlab === 0 && 'border-ink/30 bg-ink/70'
+                ]}
+              />
+            ))}
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="flex items-center justify-between gap-4 pt-1">
+      <div class="flex items-center gap-3 font-mono text-[10px] text-ink-muted">
+        <span class="inline-flex items-center gap-1.5">
+          <span class="h-2.5 w-2.5 rounded-[2px] border border-ink/30 bg-ink/70"></span>
+          {labels.github}
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="h-2.5 w-2.5 rounded-[2px] border border-signal/40 bg-signal/70"></span>
+          {labels.gitlab}
+        </span>
+      </div>
+
+      <div class="flex items-center gap-1.5 font-mono text-[10px] text-ink-muted">
+        <span>{labels.less}</span>
+        {
+          scale.map((level) => (
+            <span
+              class:list={[
+                'h-3 w-3 rounded-[3px] border border-border',
+                level === 0 && 'bg-surface',
+                level === 1 && 'bg-signal/20',
+                level === 2 && 'bg-signal/40',
+                level === 3 && 'bg-signal/60',
+                level === 4 && 'bg-signal/80'
+              ]}
+            />
+          ))
+        }
+        <span>{labels.more}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="sr-only">
+  {`${totals.github} ${labels.github}, ${totals.gitlab} ${labels.gitlab}`}
+</p>

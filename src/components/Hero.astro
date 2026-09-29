@@ -1,0 +1,93 @@
+---
+import {resolveCvHref} from '@/lib/cv';
+import {EMAIL} from '@/lib/social-links';
+import {t, tRaw, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const {locale} = Astro.props;
+const topSkills = tRaw<string[]>(locale, 'Hero', 'topSkills');
+---
+
+<section id="top" class="hero-glow relative px-6 pb-24 pt-40">
+  <div class="mx-auto flex max-w-2xl flex-col items-start gap-5">
+    <div class="reveal avatar-ring rounded-full p-[3px]" style="--delay: 0ms">
+      <div class="overflow-hidden rounded-full bg-canvas">
+        <img
+          src="/images/hero.webp"
+          alt={t(locale, 'Hero', 'avatarAlt')}
+          width="120"
+          height="120"
+          class="h-[120px] w-[120px] rounded-full object-cover"
+        />
+      </div>
+    </div>
+
+    <h1 class="reveal font-display text-4xl text-ink sm:text-5xl" style="--delay: 100ms">
+      {t(locale, 'Hero', 'greeting', {name: t(locale, 'Hero', 'name')})}
+    </h1>
+
+    <div
+      class="reveal inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 font-mono text-xs text-ink-muted"
+      style="--delay: 200ms"
+    >
+      <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-signal"></span>
+      {t(locale, 'Hero', 'statusPill')}
+    </div>
+
+    <p class="reveal max-w-md font-body text-ink-muted" style="--delay: 300ms">
+      <span class="text-ink">{t(locale, 'Hero', 'role')}</span>
+      {t(locale, 'Hero', 'description')}
+    </p>
+
+    <p class="reveal font-body text-ink-muted" style="--delay: 400ms">
+      {t(locale, 'Hero', 'currentlyWorkingOnPrefix')}
+      <strong class="font-medium text-ink">{t(locale, 'Hero', 'currentProject')}</strong>
+      {t(locale, 'Hero', 'currentProjectSuffix')}
+    </p>
+
+    <p class="reveal font-mono text-sm text-ink-muted" style="--delay: 500ms">
+      {t(locale, 'Hero', 'topSkillsLabel')} — {topSkills.join(' · ')}
+    </p>
+
+    <div class="reveal flex items-center gap-3 pt-2" style="--delay: 600ms">
+      <a
+        href={`mailto:${EMAIL}`}
+        class="rounded-full bg-ink px-5 py-2.5 font-body text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+      >
+        {t(locale, 'Hero', 'sayHello')}
+      </a>
+      <a
+        href={resolveCvHref(locale)}
+        download
+        class="rounded-full border border-border px-5 py-2.5 font-body text-sm font-medium text-ink transition-colors hover:border-ink-muted"
+      >
+        {t(locale, 'Hero', 'downloadCv')}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: reveal 0.5s ease-out var(--delay, 0ms) forwards;
+    }
+  }
+
+  @keyframes reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

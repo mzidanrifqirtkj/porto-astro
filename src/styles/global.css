@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+/* Design tokens. Values mirror the previous tailwind.config.ts so the palette,
+   typefaces and gradients stay identical after the Astro migration. */
+@theme {
+  --color-canvas: #0a0a0c;
+  --color-surface: #131316;
+  --color-border: #232326;
+  --color-ink: #f2f2f0;
+  --color-ink-muted: #8b8b90;
+  --color-signal: #34d399;
+
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-body;
+  }
+
+  :where(a, button, [role='button'], input, select, textarea, summary):focus-visible {
+    @apply outline-none ring-2 ring-signal/70 ring-offset-2 ring-offset-canvas;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Radial glow behind the hero and as the fallback project thumbnail. */
+@utility hero-glow {
+  background-image: radial-gradient(circle at 30% 20%, rgba(242, 242, 240, 0.06), transparent 60%);
+}
+
+/* Conic ring around the hero avatar. Spins unless the visitor asks for less motion. */
+@utility avatar-ring {
+  background-image: conic-gradient(
+    from 0deg,
+    rgba(242, 242, 240, 0.35),
+    transparent 55%,
+    rgba(242, 242, 240, 0.35)
+  );
+  animation: spin-ring 8s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes spin-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Status pill dot. Static for visitors who prefer reduced motion. */
+@utility pulse-dot {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: var(--animate-pulse-dot);
+  }
+}

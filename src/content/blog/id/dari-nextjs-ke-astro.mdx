@@ -1,0 +1,44 @@
+---
+title: 'Dari Next.js ke Astro: Kenapa Saya Pindah'
+description: 'Portofolio ini dulu dibangun dengan Next.js 14. Sekarang Astro. Ini alasan dan angka di baliknya.'
+date: 2026-09-23
+tags: ['astro', 'next.js', 'performance']
+locale: id
+translationKey: nextjs-to-astro
+draft: false
+---
+
+Portofolio ini awalnya adalah aplikasi Next.js 14 dengan next-intl dan framer-motion. Sekarang
+dibangun ulang dengan Astro. Ini catatan singkat alasannya.
+
+## Situs statis tidak butuh runtime server
+
+Isi situs ini seluruhnya statis: tidak ada API route, tidak ada server action, tidak ada database.
+Semua konten berasal dari file. Menjalankan Next.js berarti membawa runtime server dan bundel React
+untuk pekerjaan yang sebenarnya bisa diselesaikan dengan HTML jadi.
+
+Astro membalik defaultnya. Komponen dikirim sebagai HTML, dan JavaScript ke klien nol kecuali kalau
+diminta eksplisit. Untuk situs konten seperti ini, itu selisih yang besar.
+
+## Animasi tidak harus jadi bundel
+
+Framer-motion dulu dipakai untuk animasi masuk yang sederhana: `opacity` dan `translateY` yang
+berjalan sekali saat section masuk viewport. Semua itu bisa diganti CSS transition plus satu
+`IntersectionObserver`, dengan hasil visual yang sama dan tanpa satu byte pun JavaScript.
+
+Yang penting dijaga: hormati `prefers-reduced-motion`. Kalau pengunjung meminta gerakan minimal,
+animasi harus mati, bukan cuma diperlambat.
+
+## Konten terstruktur, bukan halaman menumpuk
+
+Blog dan daftar project di sini pakai content collections. Menambah satu tulisan berarti menambah
+satu file `.mdx`: frontmatter divalidasi skema saat build, jadi salah field langsung ketahuan, bukan
+jadi halaman kosong di produksi.
+
+## Deploy-nya ke Cloudflare
+
+Output build berupa file statis murni, jadi bisa disajikan langsung sebagai static assets. Tidak ada
+adapter, tidak ada server. Untuk situs sekecil ini, jalur paling murah sekaligus paling cepat.
+
+Kalau tujuanmu sama — portofolio ringan dengan blog dan halaman CV — dan isinya memang statis,
+Astro menghapus satu lapisan yang sebenarnya tidak pernah kamu perlukan.

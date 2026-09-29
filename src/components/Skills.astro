@@ -1,0 +1,24 @@
+---
+import AnimatedSection from '@/components/AnimatedSection.astro';
+import SectionEyebrow from '@/components/SectionEyebrow.astro';
+import SkillCard from '@/components/SkillCard.astro';
+import type {SkillCategory} from '@/lib/types';
+import {t, tRaw, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const {locale} = Astro.props;
+const categories = tRaw<SkillCategory[]>(locale, 'Skills', 'categories');
+---
+
+<AnimatedSection id="skills">
+  <div class="mx-auto max-w-2xl">
+    <SectionEyebrow>{t(locale, 'Skills', 'eyebrow')}</SectionEyebrow>
+    <h2 class="mb-6 font-display text-2xl text-ink">{t(locale, 'Skills', 'heading')}</h2>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {categories.map((category) => <SkillCard category={category} />)}
+    </div>
+  </div>
+</AnimatedSection>

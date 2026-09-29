@@ -1,0 +1,6 @@
+---
+// Every locale is prefixed, so `/` hands off to the default locale.
+// Required by i18n.routing.redirectToDefaultLocale — Astro also generates its own
+// redirect route for `/` when this file is present.
+return Astro.redirect('/id');
+---

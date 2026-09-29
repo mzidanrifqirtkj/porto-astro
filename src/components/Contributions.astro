@@ -1,0 +1,64 @@
+---
+import AnimatedSection from '@/components/AnimatedSection.astro';
+import SectionEyebrow from '@/components/SectionEyebrow.astro';
+import ContributionHeatmap from '@/components/ContributionHeatmap.astro';
+import contributions from '@/data/contributions.json';
+import type {ContributionData} from '@/lib/types';
+import {t, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const {locale} = Astro.props;
+const data = contributions as ContributionData;
+
+const total = data.totals.github + data.totals.gitlab;
+const labels = {
+  less: t(locale, 'Contributions', 'less'),
+  more: t(locale, 'Contributions', 'more'),
+  github: t(locale, 'Contributions', 'github'),
+  gitlab: t(locale, 'Contributions', 'gitlab')
+};
+
+const updated = data.updatedAt
+  ? new Intl.DateTimeFormat(locale === 'id' ? 'id-ID' : 'en-US', {
+      dateStyle: 'long',
+      timeZone: 'UTC'
+    }).format(new Date(data.updatedAt))
+  : null;
+---
+
+<AnimatedSection id="contributions">
+  <div class="mx-auto max-w-2xl">
+    <SectionEyebrow>{t(locale, 'Contributions', 'eyebrow')}</SectionEyebrow>
+    <h2 class="mb-3 font-display text-2xl text-ink">
+      {t(locale, 'Contributions', 'heading')}
+    </h2>
+    <p class="mb-6 font-body text-sm text-ink-muted">
+      {t(locale, 'Contributions', 'summary', {
+        total,
+        github: data.totals.github,
+        gitlab: data.totals.gitlab
+      })}
+    </p>
+
+    {
+      data.days.length > 0 ? (
+        <ContributionHeatmap data={data} labels={labels} />
+      ) : (
+        <p class="rounded-2xl border border-border bg-surface p-5 font-mono text-xs text-ink-muted">
+          {t(locale, 'Contributions', 'empty')}
+        </p>
+      )
+    }
+
+    {
+      updated && (
+        <p class="mt-3 font-mono text-[10px] text-ink-muted">
+          {t(locale, 'Contributions', 'updatedAt', {date: updated})}
+        </p>
+      )
+    }
+  </div>
+</AnimatedSection>

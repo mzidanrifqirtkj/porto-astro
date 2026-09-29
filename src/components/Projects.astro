@@ -1,0 +1,41 @@
+---
+import {getCollection} from 'astro:content';
+import AnimatedSection from '@/components/AnimatedSection.astro';
+import SectionEyebrow from '@/components/SectionEyebrow.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import {t, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  limit?: number;
+}
+
+const {locale, limit} = Astro.props;
+
+const entries = (await getCollection('projects', ({data}) => data.locale === locale)).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)
+);
+const projects = typeof limit === 'number' ? entries.slice(0, limit) : entries;
+---
+
+<AnimatedSection id="projects">
+  <div class="mx-auto max-w-2xl">
+    <SectionEyebrow>{t(locale, 'Projects', 'eyebrow')}</SectionEyebrow>
+    <h2 class="mb-6 font-display text-2xl text-ink">{t(locale, 'Projects', 'heading')}</h2>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {
+        projects.map((project) => (
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            techStack={project.data.techStack}
+            demoUrl={project.data.demoUrl}
+            githubUrl={project.data.githubUrl}
+            image={project.data.image}
+          />
+        ))
+      }
+    </div>
+  </div>
+</AnimatedSection>

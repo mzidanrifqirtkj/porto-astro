@@ -1,0 +1,44 @@
+---
+title: 'Moving This Portfolio from Next.js to Astro'
+description: 'This portfolio used to be a Next.js 14 app. It is now Astro. Here is why, and what actually changed.'
+date: 2026-09-23
+tags: ['astro', 'next.js', 'performance']
+locale: en
+translationKey: nextjs-to-astro
+draft: false
+---
+
+This portfolio started as a Next.js 14 app with next-intl and framer-motion. It is now rebuilt with
+Astro. These are the reasons, briefly.
+
+## A static site does not need a server runtime
+
+Everything here is static: no API routes, no server actions, no database. All content lives in
+files. Running Next.js meant shipping a server runtime and a React bundle for work that HTML could
+do on its own.
+
+Astro inverts the default. Components render to HTML, and client JavaScript is zero unless you ask
+for it. For a content site like this one, that is a large difference.
+
+## Animation does not have to cost a bundle
+
+Framer-motion was doing something simple: an `opacity` and `translateY` entrance that runs once when
+a section scrolls into view. All of that is expressible as a CSS transition plus one
+`IntersectionObserver`, with the same visual result and no JavaScript at all.
+
+The part worth keeping: respect `prefers-reduced-motion`. When a visitor asks for minimal motion,
+the animation should be off, not merely slower.
+
+## Structured content instead of piled-up pages
+
+The blog and the project list use content collections. Adding a post means adding one `.mdx` file:
+frontmatter is validated against a schema at build time, so a wrong field fails loudly instead of
+becoming a blank page in production.
+
+## It deploys to Cloudflare
+
+The build output is plain static files, so it can be served directly as static assets. No adapter,
+no server. For a site this small, that is the cheapest and the fastest path.
+
+If your goal is the same — a light portfolio with a blog and a CV page — and the content really is
+static, Astro removes a layer you never needed.

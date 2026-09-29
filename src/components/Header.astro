@@ -1,0 +1,149 @@
+---
+import NavLinks from '@/components/NavLinks.astro';
+import SocialIcons from '@/components/SocialIcons.astro';
+import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
+import {t, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  /** Home page: the section anchors exist here, so NavLinks may use in-page hashes. */
+  home?: boolean;
+  /** Paired blog post slug in the other locale, forwarded to the language switcher. */
+  translationSlug?: string;
+}
+
+const {locale, home = false, translationSlug} = Astro.props;
+---
+
+<header
+  data-site-header
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-transparent transition-colors duration-300"
+>
+  <div class="mx-auto flex max-w-2xl items-center justify-between gap-3 px-6 py-4">
+    <a
+      href={`/${locale}`}
+      aria-label={t(locale, 'Nav', 'home')}
+      class="shrink-0 font-display text-sm text-ink"
+    >
+      zidan
+    </a>
+
+    <div class="flex items-center gap-3 md:gap-5">
+      <NavLinks locale={locale} variant="desktop" home={home} />
+      <a
+        href={`/${locale}/blog`}
+        class="hidden font-mono text-xs uppercase tracking-wide text-ink-muted transition-colors hover:text-ink lg:inline"
+      >
+        {t(locale, 'Nav', 'blog')}
+      </a>
+      <LanguageSwitcher translationSlug={translationSlug} />
+
+      <button
+        type="button"
+        data-menu-button
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label={t(locale, 'Nav', 'openMenu')}
+        data-open-label={t(locale, 'Nav', 'openMenu')}
+        data-close-label={t(locale, 'Nav', 'closeMenu')}
+        class="text-ink-muted transition-colors hover:text-ink lg:hidden"
+      >
+        <svg
+          data-menu-icon="open"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+          data-menu-icon="close"
+          class="hidden"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="mobile-menu"
+    data-menu-panel
+    hidden
+    class="overflow-hidden border-b border-border bg-canvas/95 backdrop-blur-md lg:hidden"
+  >
+    <div class="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-6">
+      <NavLinks locale={locale} variant="mobile" home={home} />
+      <a
+        href={`/${locale}/blog`}
+        class="font-mono text-xs uppercase tracking-wide text-ink-muted transition-colors hover:text-ink"
+      >
+        {t(locale, 'Nav', 'blog')}
+      </a>
+      <SocialIcons locale={locale} showEmail />
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const button = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+
+  if (header && button && panel) {
+    const icons = {
+      open: button.querySelector<SVGElement>('[data-menu-icon="open"]'),
+      close: button.querySelector<SVGElement>('[data-menu-icon="close"]')
+    };
+
+    const links = Array.from(panel.querySelectorAll<HTMLAnchorElement>('a'));
+
+    const setScrolled = () => {
+      const scrolled = window.scrollY > 8;
+      header.classList.toggle('border-border', scrolled);
+      header.classList.toggle('bg-canvas/80', scrolled);
+      header.classList.toggle('backdrop-blur-md', scrolled);
+      header.classList.toggle('bg-transparent', !scrolled);
+    };
+
+    const setOpen = (open: boolean) => {
+      button.setAttribute('aria-expanded', String(open));
+      button.setAttribute(
+        'aria-label',
+        open ? button.dataset.closeLabel ?? '' : button.dataset.openLabel ?? ''
+      );
+      panel.hidden = !open;
+      header.classList.toggle('bg-canvas/80', open || window.scrollY > 8);
+      header.classList.toggle('border-border', open || window.scrollY > 8);
+      document.body.style.overflow = open ? 'hidden' : '';
+      icons.open?.classList.toggle('hidden', open);
+      icons.close?.classList.toggle('hidden', !open);
+    };
+
+    setScrolled();
+    window.addEventListener('scroll', setScrolled, {passive: true});
+
+    button.addEventListener('click', () => setOpen(panel.hidden));
+    links.forEach((link) => link.addEventListener('click', () => setOpen(false)));
+
+    // Resizing past the breakpoint hides the panel with CSS, which would leave the
+    // inline `overflow: hidden` on <body> and freeze scrolling.
+    const desktop = window.matchMedia('(min-width: 64rem)');
+    desktop.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>

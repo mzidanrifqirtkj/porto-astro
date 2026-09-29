@@ -1,0 +1,91 @@
+---
+import Chip from '@/components/Chip.astro';
+import GithubIcon from '@/components/icons/GithubIcon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  techStack: string[];
+  demoUrl?: string | null;
+  githubUrl?: string | null;
+  image?: string | null;
+}
+
+const {title, description, techStack, demoUrl, githubUrl, image} = Astro.props;
+---
+
+<div
+  class="overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-ink-muted/50 hover:shadow-[0_0_24px_rgba(242,242,240,0.04)]"
+>
+  <div class="hero-glow relative flex aspect-video w-full items-center justify-center bg-canvas">
+    {
+      image ? (
+        <img src={image} alt={title} loading="lazy" class="h-full w-full object-cover" />
+      ) : (
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-ink-muted/40"
+          aria-hidden="true"
+        >
+          <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <path d="M8 3v4M16 3v4"></path>
+        </svg>
+      )
+    }
+  </div>
+
+  <div class="p-5">
+    <h3 class="mb-2 font-display text-base text-ink">{title}</h3>
+    <p class="mb-4 font-body text-sm leading-relaxed text-ink-muted">{description}</p>
+
+    <div class="mb-4 flex flex-wrap gap-2">
+      {techStack.map((tech) => <Chip>{tech}</Chip>)}
+    </div>
+
+    {
+      (demoUrl || githubUrl) && (
+        <div class="flex items-center gap-3">
+          {demoUrl && (
+            <a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-ink-muted transition-colors hover:text-ink"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              </svg>
+            </a>
+          )}
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-ink-muted transition-colors hover:text-ink"
+            >
+              <GithubIcon size={16} />
+            </a>
+          )}
+        </div>
+      )
+    }
+  </div>
+</div>

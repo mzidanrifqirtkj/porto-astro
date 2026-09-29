@@ -1,0 +1,44 @@
+---
+import GithubIcon from '@/components/icons/GithubIcon.astro';
+import LinkedinIcon from '@/components/icons/LinkedinIcon.astro';
+import EmailIcon from '@/components/icons/EmailIcon.astro';
+import {EMAIL, SOCIAL_LINKS} from '@/lib/social-links';
+import {t, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  class?: string;
+  showEmail?: boolean;
+}
+
+const {locale, class: className, showEmail = false} = Astro.props;
+const linkClass = 'text-ink-muted transition-colors hover:text-ink';
+---
+
+<div class:list={['flex items-center gap-4', className]}>
+  {
+    showEmail && (
+      <a href={`mailto:${EMAIL}`} aria-label={t(locale, 'Social', 'email')} class={linkClass}>
+        <EmailIcon size={16} />
+      </a>
+    )
+  }
+  <a
+    href={SOCIAL_LINKS.linkedin}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={t(locale, 'Social', 'linkedin')}
+    class={linkClass}
+  >
+    <LinkedinIcon size={16} />
+  </a>
+  <a
+    href={SOCIAL_LINKS.github}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={t(locale, 'Social', 'github')}
+    class={linkClass}
+  >
+    <GithubIcon size={16} />
+  </a>
+</div>

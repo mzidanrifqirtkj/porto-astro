@@ -1,0 +1,123 @@
+---
+import '@fontsource/space-grotesk/latin-500.css';
+import '@fontsource/space-grotesk/latin-600.css';
+import '@fontsource/space-grotesk/latin-700.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/jetbrains-mono/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-500.css';
+import '@/styles/global.css';
+
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import ScrollToTop from '@/components/ScrollToTop.astro';
+import {LOCALES, t, type Locale} from '@/i18n/ui';
+import {SITE_URL} from '@/lib/site';
+import {SITE_NAME} from '@/lib/social-links';
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+  /** Path relative to the locale root, e.g. `/blog` — used for canonical and hreflang. */
+  path?: string;
+  /** Passed through to the language switcher; see LanguageSwitcher.astro. */
+  translationSlug?: string;
+}
+
+const {locale, path = '', translationSlug} = Astro.props;
+// Home is the only route without a `path`, and the only one whose section anchors exist.
+const isHome = path === '';
+const title = Astro.props.title ?? t(locale, 'Meta', 'title');
+// About.description is a short one-liner; Meta.description is the long-form copy and
+// would be truncated by search engines. `path` tells the components apart.
+const description =
+  Astro.props.description ??
+  (path ? t(locale, 'Meta', 'description') : t(locale, 'About', 'description'));
+
+const canonical = `${SITE_URL}/${locale}${path}`;
+const alternate = (target: Locale) => `${SITE_URL}/${target}${path}`;
+const ogImage = `${SITE_URL}/images/og.png`;
+const ogImageAlt = t(locale, 'Meta', 'title');
+---
+
+<!doctype html>
+<html lang={locale} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    {
+      LOCALES.map((target) => (
+        <link rel="alternate" hreflang={target} href={alternate(target)} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={`${SITE_URL}/id${path}`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content={locale === 'id' ? 'id_ID' : 'en_US'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <meta name="robots" content="index, follow" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
+
+    <script is:inline>
+      // Enables the scroll-reveal styles. Without JS the content stays visible.
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-canvas"
+    >
+      Skip to content
+    </a>
+    <Header locale={locale} home={isHome} translationSlug={translationSlug} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <ScrollToTop locale={locale} />
+
+    <script>
+      // Reveals sections as they scroll into view. Replaces the previous
+      // framer-motion `whileInView` animation; CSS does the transition, this only
+      // toggles the class. Each section animates once.
+      const sections = document.querySelectorAll<HTMLElement>('[data-animate]');
+
+      if (sections.length > 0) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          },
+          {threshold: 0.2}
+        );
+
+        sections.forEach((section) => observer.observe(section));
+      }
+    </script>
+  </body>
+</html>

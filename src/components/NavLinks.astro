@@ -1,0 +1,41 @@
+---
+import {t, type Locale} from '@/i18n/ui';
+
+/**
+ * Ordered nav sections. Each key needs a matching `Nav` string in both locale
+ * files and a matching `id` on the section's `AnimatedSection`.
+ */
+export const NAV_SECTIONS = ['about', 'skills', 'experience', 'contributions', 'projects'] as const;
+export type NavKey = (typeof NAV_SECTIONS)[number];
+
+interface Props {
+  locale: Locale;
+  variant: 'desktop' | 'mobile';
+  /** On the home page the sections are in view, so link to the in-page anchors. */
+  home?: boolean;
+}
+
+const {locale, variant, home = false} = Astro.props;
+
+// Off the home page the anchors would be dead, so point at the home page section instead.
+const hashPrefix = home ? '' : `/${locale}/`;
+
+const className =
+  variant === 'desktop'
+    ? 'hidden items-center gap-4 font-mono text-xs uppercase tracking-wide text-ink-muted lg:flex'
+    : 'flex flex-col gap-5 font-mono text-xs uppercase tracking-wide text-ink-muted';
+---
+
+<nav class={className} aria-label={variant === 'desktop' ? 'Primary' : undefined}>
+  {
+    NAV_SECTIONS.map((key) => (
+      <a
+        href={`${hashPrefix}#${key}`}
+        data-nav-link={key}
+        class="transition-colors hover:text-ink data-[active]:text-ink"
+      >
+        {t(locale, 'Nav', key)}
+      </a>
+    ))
+  }
+</nav>

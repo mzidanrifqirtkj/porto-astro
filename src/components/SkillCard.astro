@@ -1,0 +1,19 @@
+---
+import Chip from '@/components/Chip.astro';
+import type {SkillCategory} from '@/lib/types';
+
+interface Props {
+  category: SkillCategory;
+}
+
+const {category} = Astro.props;
+---
+
+<div
+  class="rounded-2xl border border-border bg-surface p-5 transition-all duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-ink-muted/50 hover:shadow-[0_0_24px_rgba(242,242,240,0.04)]"
+>
+  <h3 class="mb-3 font-mono text-xs uppercase tracking-wide text-ink-muted">{category.name}</h3>
+  <div class="flex flex-wrap gap-2">
+    {category.items.map((item) => <Chip>{item}</Chip>)}
+  </div>
+</div>

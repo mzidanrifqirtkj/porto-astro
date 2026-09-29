@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import About from '@/components/About.astro';
+import Skills from '@/components/Skills.astro';
+import Experience from '@/components/Experience.astro';
+import Contributions from '@/components/Contributions.astro';
+import Projects from '@/components/Projects.astro';
+import {LOCALES, resolveLocale} from '@/i18n/ui';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({params: {locale}}));
+}
+
+const locale = resolveLocale(Astro.params.locale);
+---
+
+<BaseLayout locale={locale}>
+  <Hero locale={locale} />
+  <About locale={locale} />
+  <Skills locale={locale} />
+  <Experience locale={locale} />
+  <Contributions locale={locale} />
+  <Projects locale={locale} />
+</BaseLayout>

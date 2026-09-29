@@ -1,0 +1,45 @@
+---
+import {LOCALES, resolveLocale, t} from '@/i18n/ui';
+
+interface Props {
+  /**
+   * Filename (no locale dir, no extension) of this page's translation in the other
+   * locale. Only needed when the slug differs per language, i.e. blog posts. Without
+   * it the switcher just swaps the locale prefix and the slug is assumed identical.
+   */
+  translationSlug?: string;
+}
+
+const {translationSlug} = Astro.props;
+const current = resolveLocale(Astro.currentLocale);
+
+// Current path with the locale prefix stripped, e.g. `blog/dari-nextjs-ke-astro/`.
+const currentPath = Astro.url.pathname.replace(/^\/(?:id|en)(?=\/|$)/, '').replace(/^\//, '');
+
+const target = (locale: string): string =>
+  locale === current || !translationSlug
+    ? `/${locale}/${currentPath}`
+    : `/${locale}/blog/${translationSlug}`;
+---
+
+<div
+  class="flex items-center rounded-full border border-border bg-surface p-1 font-mono text-xs"
+  role="group"
+  aria-label={t(current, 'LanguageSwitcher', 'label')}
+>
+  {
+    LOCALES.map((locale) => (
+      <a
+        href={target(locale)}
+        hreflang={locale}
+        aria-current={locale === current ? 'true' : undefined}
+        class:list={[
+          'rounded-full px-2.5 py-1 transition-colors',
+          locale === current ? 'bg-ink text-canvas' : 'text-ink-muted hover:text-ink'
+        ]}
+      >
+        {t(current, 'LanguageSwitcher', locale)}
+      </a>
+    ))
+  }
+</div>

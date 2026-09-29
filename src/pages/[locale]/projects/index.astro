@@ -1,0 +1,51 @@
+---
+import {getCollection} from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import {LOCALES, resolveLocale, t} from '@/i18n/ui';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({params: {locale}}));
+}
+
+const locale = resolveLocale(Astro.params.locale);
+
+const projects = (
+  await getCollection('projects', ({data}) => data.locale === locale)
+).sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+---
+
+<BaseLayout
+  locale={locale}
+  path="/projects"
+  title={`${t(locale, 'Projects', 'heading')} — ${t(locale, 'Meta', 'title')}`}
+  description={t(locale, 'Projects', 'description')}
+>
+  <section class="px-6 pb-16 pt-40">
+    <div class="mx-auto max-w-2xl">
+      <p class="mb-3 font-mono text-sm text-ink-muted">{t(locale, 'Projects', 'eyebrow')}</p>
+      <h1 class="mb-8 font-display text-3xl text-ink">{t(locale, 'Projects', 'heading')}</h1>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {
+          projects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              techStack={project.data.techStack}
+              demoUrl={project.data.demoUrl}
+              githubUrl={project.data.githubUrl}
+              image={project.data.image}
+            />
+          ))
+        }
+      </div>
+
+      {
+        projects.length === 0 && (
+          <p class="font-body text-sm text-ink-muted">{t(locale, 'Projects', 'empty')}</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

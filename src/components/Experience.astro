@@ -1,0 +1,24 @@
+---
+import AnimatedSection from '@/components/AnimatedSection.astro';
+import SectionEyebrow from '@/components/SectionEyebrow.astro';
+import ExperienceCard from '@/components/ExperienceCard.astro';
+import type {ExperienceRole} from '@/lib/types';
+import {t, tRaw, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const {locale} = Astro.props;
+const roles = tRaw<ExperienceRole[]>(locale, 'Experience', 'roles');
+---
+
+<AnimatedSection id="experience" class="bg-surface/20">
+  <div class="mx-auto max-w-2xl">
+    <SectionEyebrow>{t(locale, 'Experience', 'eyebrow')}</SectionEyebrow>
+    <h2 class="mb-6 font-display text-2xl text-ink">{t(locale, 'Experience', 'heading')}</h2>
+    <div class="flex flex-col gap-10">
+      {roles.map((role) => <ExperienceCard role={role} />)}
+    </div>
+  </div>
+</AnimatedSection>

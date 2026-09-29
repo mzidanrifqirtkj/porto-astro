@@ -1,0 +1,224 @@
+{
+  "Meta": {
+    "title": "Muhammad Zidan Rifqi Ramadhan — Full-Stack Developer",
+    "description": "Portofolio Muhammad Zidan Rifqi Ramadhan, Full-Stack Developer yang berfokus pada Back-end, membangun sistem yang andal dengan Laravel, Node.js, dan Golang."
+  },
+  "Nav": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "skills": "Skill",
+    "experience": "Pengalaman",
+    "projects": "Proyek",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu",
+    "blog": "Blog",
+    "contributions": "Kontribusi"
+  },
+  "ScrollToTop": {
+    "backToTop": "Kembali ke atas"
+  },
+  "Social": {
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "LanguageSwitcher": {
+    "en": "EN",
+    "id": "ID",
+    "label": "Bahasa"
+  },
+  "Hero": {
+    "greeting": "Hai, saya {name}.",
+    "name": "Zidan",
+    "avatarAlt": "Foto profil Zidan",
+    "statusPill": "terbuka untuk peluang",
+    "role": "Full-Stack Developer, fokus back-end.",
+    "description": "Saya membangun sistem yang andal dengan Laravel, Node.js, dan Golang.",
+    "currentlyWorkingOnPrefix": "Saat ini membangun",
+    "currentProject": "Sistem Informasi Rumah Sakit",
+    "currentProjectSuffix": "di PT Medika Digital Nusantara",
+    "topSkillsLabel": "skill utama",
+    "topSkills": [
+      "php",
+      "laravel",
+      "node.js",
+      "golang",
+      "docker"
+    ],
+    "sayHello": "Sapa Saya",
+    "downloadCv": "Unduh CV"
+  },
+  "About": {
+    "eyebrow": "// tentang",
+    "heading": "Tentang",
+    "description": "Full-Stack Developer yang berfokus pada Back-end di Yogyakarta, membangun sistem andal dengan Laravel, Node.js, dan Golang.",
+    "paragraph": "Full-Stack Developer yang lebih berfokus pada bagian Back-end dengan kemampuan mumpuni untuk membuat project berskala besar. Berpengalaman dalam seluruh siklus pengembangan perangkat lunak — mulai dari mengoptimalkan fitur yang ada hingga merancang fitur baru — menggunakan PHP dan JavaScript serta framework seperti Laravel dan Node.js, dan saat ini sedang mendalami Golang (Fiber). Memiliki minat tinggi dalam mengeksplorasi teknologi baru dan berharap dapat berguna bagi orang lain di bidang ini. Berbasis di Yogyakarta, saat ini membangun Sistem Informasi Rumah Sakit sebagai Full-Stack Developer di PT Medika Digital Nusantara. Lulusan Informatika, Universitas AKPRIND Yogyakarta (2021–2025), IPK 3,47."
+  },
+  "Skills": {
+    "eyebrow": "// skill",
+    "heading": "Skill",
+    "categories": [
+      {
+        "name": "Frontend",
+        "items": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "React",
+          "Vue",
+          "Tailwind CSS"
+        ]
+      },
+      {
+        "name": "Backend",
+        "items": [
+          "PHP",
+          "Laravel",
+          "Node.js",
+          "Express.js",
+          "Golang"
+        ]
+      },
+      {
+        "name": "Database",
+        "items": [
+          "MySQL",
+          "PostgreSQL",
+          "MongoDB",
+          "MS Access",
+          "Oracle",
+          "SQLite"
+        ]
+      },
+      {
+        "name": "Tools & Infra",
+        "items": [
+          "Git",
+          "GitHub",
+          "GitLab",
+          "Docker",
+          "Redis",
+          "AWS",
+          "Tencent Cloud",
+          "Cloudflare",
+          "CI/CD"
+        ]
+      },
+      {
+        "name": "AI Tools",
+        "items": [
+          "LLM",
+          "OpenCode",
+          "Claude Code",
+          "9Router",
+          "Hermes"
+        ]
+      }
+    ]
+  },
+  "Experience": {
+    "eyebrow": "~/pengalaman",
+    "heading": "Pengalaman",
+    "roles": [
+      {
+        "company": "PT Medika Digital Nusantara",
+        "role": "Full-Stack Developer",
+        "location": "Yogyakarta, Indonesia",
+        "dateRange": "Jan 2026 — Sekarang",
+        "bullets": [
+          "Mengembangkan dan memelihara Sistem Informasi Rumah Sakit yang komprehensif untuk berbagai institusi layanan kesehatan menggunakan PHP, CSS, JavaScript, dan OracleDB.",
+          "Merancang dan mengimplementasikan aplikasi web untuk klinik dengan fokus pada kemudahan penggunaan dan pemeliharaan menggunakan Laravel dan MySQL.",
+          "Mengoptimalkan skema basis data dan query untuk memastikan penggunaan data yang akurat dan real-time.",
+          "Menjaga konsistensi sistem menggunakan Docker.",
+          "Menggunakan pipeline dan CI/CD untuk mempermudah proses deploy ke server.",
+          "Mengelola lingkungan server dan memantau kesehatan aplikasi menggunakan New Relic, mendiagnosis masalah melalui log, dan menangani insiden produksi secepat mungkin.",
+          "Menerapkan strategi caching menggunakan Redis, berhasil mengurangi latensi respons API.",
+          "Mengintegrasikan alat pengembangan berbasis AI seperti Claude Code ke dalam alur kerja, mengurangi waktu pembuatan boilerplate hingga ~50% dan mempercepat peluncuran fitur."
+        ],
+        "techStack": [
+          "PHP",
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Laravel",
+          "Tailwind CSS",
+          "Oracle",
+          "MySQL",
+          "GitLab",
+          "Redis"
+        ]
+      },
+      {
+        "company": "Freelance",
+        "role": "Full-Stack Developer",
+        "location": "Yogyakarta, Indonesia",
+        "dateRange": "Agu 2025 — Jan 2026",
+        "bullets": [
+          "Mengembangkan lebih dari 10 aplikasi web dan mobile untuk klien di sektor industri menggunakan Laravel, Golang, Flutter, React.js, Bootstrap, dan Tailwind CSS.",
+          "Membuat dashboard admin yang responsif menggunakan React.js dan Tailwind CSS, menampilkan analitik real-time melalui grafik dan tabel.",
+          "Membangun sistem menggunakan library Laravel seperti Spatie, Breeze, Octane, dan Inertia untuk menyederhanakan dan mempercepat pengembangan.",
+          "Membangun aplikasi mobile untuk manajemen karyawan — presensi, pembagian tugas, lembur — dengan lazy loading dan data real-time menggunakan Flutter dan Golang.",
+          "Merancang dan mengimplementasikan API RESTful yang digunakan oleh lebih dari 10 pengguna aktif harian, menangani transaksi dengan tingkat ketersediaan 99,9% menggunakan arsitektur microservice Laravel + Golang.",
+          "Mengimplementasikan layout responsif berbasis Figma dengan Tailwind CSS, serta menggunakan AWS S3 untuk penyimpanan berkas.",
+          "Bekerja sama dengan tim 2–3 orang menggunakan Git/GitHub, menerapkan metodologi Agile dan Kanban."
+        ],
+        "techStack": [
+          "Laravel",
+          "React.js",
+          "Tailwind CSS",
+          "Bootstrap",
+          "Flutter",
+          "Golang",
+          "MySQL",
+          "AWS S3"
+        ]
+      },
+      {
+        "company": "PT. Duta Wakaf Indonesia",
+        "role": "Full-Stack Developer Intern",
+        "location": "Yogyakarta, Indonesia",
+        "dateRange": "Okt 2024 — Jan 2025",
+        "bullets": [
+          "Turut andil dalam pengembangan SWAKARTA, sebuah platform CMS berbasis Wakaf dengan 20 template yang dapat disesuaikan di atas Laravel MVC, memungkinkan pengguna non-teknis meluncurkan situs profesional dalam waktu kurang dari 30 menit.",
+          "Membangun sistem template modular menggunakan arsitektur MVC Laravel untuk mendukung pengelolaan konten secara dinamis.",
+          "Bekerja sama dengan tim lintas divisi 4–6 anggota menggunakan Git/GitHub untuk pengendalian versi, menerapkan metodologi Agile dan Kanban (Trello)."
+        ],
+        "techStack": [
+          "Laravel",
+          "Breeze",
+          "Bootstrap",
+          "JavaScript",
+          "MySQL"
+        ]
+      }
+    ]
+  },
+  "Projects": {
+    "eyebrow": "~/proyek",
+    "heading": "Proyek",
+    "description": "Sebagian proyek yang sudah saya kerjakan — manajemen konten, sistem kesehatan, dashboard, dan aplikasi mobile.",
+    "empty": "Belum ada proyek yang dipublikasikan."
+  },
+  "Contributions": {
+    "eyebrow": "// kontribusi",
+    "heading": "Kontribusi",
+    "summary": "{total} kontribusi dalam setahun terakhir ({github} GitHub · {gitlab} GitLab)",
+    "less": "Sedikit",
+    "more": "Banyak",
+    "github": "GitHub",
+    "gitlab": "GitLab",
+    "updatedAt": "Diperbarui {date}",
+    "empty": "Data kontribusi belum tersedia."
+  },
+  "Blog": {
+    "eyebrow": "~/blog",
+    "heading": "Blog",
+    "description": "Catatan teknis tentang Laravel, Golang, arsitektur sistem, dan hal-hal yang saya pelajari sambil membangun.",
+    "backToBlog": "Kembali ke blog",
+    "publishedOn": "Diterbitkan {date}",
+    "empty": "Belum ada artikel. Menyusul."
+  },
+  "Footer": {
+    "copyright": "© {year} Muhammad Zidan Rifqi Ramadhan. Seluruh hak cipta dilindungi."
+  }
+}

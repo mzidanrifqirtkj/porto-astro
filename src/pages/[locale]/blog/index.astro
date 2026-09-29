@@ -1,0 +1,71 @@
+---
+import {getCollection} from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Chip from '@/components/Chip.astro';
+import {LOCALES, resolveLocale, t} from '@/i18n/ui';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({params: {locale}}));
+}
+
+const locale = resolveLocale(Astro.params.locale);
+
+const posts = (await getCollection('blog', ({data}) => data.locale === locale && !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const slugOf = (id: string) => id.split('/').slice(1).join('/');
+
+const dateFormatter = new Intl.DateTimeFormat(locale === 'id' ? 'id-ID' : 'en-US', {
+  dateStyle: 'long',
+  timeZone: 'UTC'
+});
+---
+
+<BaseLayout
+  locale={locale}
+  path="/blog"
+  title={`${t(locale, 'Blog', 'heading')} — ${t(locale, 'Meta', 'title')}`}
+  description={t(locale, 'Blog', 'description')}
+>
+  <section class="px-6 pb-16 pt-40">
+    <div class="mx-auto max-w-2xl">
+      <p class="mb-3 font-mono text-sm text-ink-muted">{t(locale, 'Blog', 'eyebrow')}</p>
+      <h1 class="mb-4 font-display text-3xl text-ink">{t(locale, 'Blog', 'heading')}</h1>
+      <p class="mb-10 max-w-xl font-body leading-relaxed text-ink-muted">
+        {t(locale, 'Blog', 'description')}
+      </p>
+
+      {
+        posts.length === 0 ? (
+          <p class="font-body text-sm text-ink-muted">{t(locale, 'Blog', 'empty')}</p>
+        ) : (
+          <ul class="flex flex-col gap-8">
+            {posts.map((post) => (
+              <li class="border-l-2 border-ink-muted/25 pl-6 transition-colors hover:border-ink-muted/60">
+                <a href={`/${locale}/blog/${slugOf(post.id)}`} class="group block">
+                  <p class="font-mono text-xs text-ink-muted">
+                    {dateFormatter.format(post.data.date)}
+                  </p>
+                  <h2 class="mt-1 font-display text-lg text-ink group-hover:underline">
+                    {post.data.title}
+                  </h2>
+                  <p class="mt-2 font-body text-sm leading-relaxed text-ink-muted">
+                    {post.data.description}
+                  </p>
+                  {post.data.tags.length > 0 && (
+                    <span class="mt-3 flex flex-wrap gap-2">
+                      {post.data.tags.map((tag) => (
+                        <Chip>{tag}</Chip>
+                      ))}
+                    </span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
