@@ -13,9 +13,14 @@ interface Props {
   variant: 'desktop' | 'mobile';
   /** On the home page the sections are in view, so link to the in-page anchors. */
   home?: boolean;
+  /**
+   * Defaults to every section. BaseLayout narrows it when a section hides itself, so a
+   * nav link never points at an anchor that is not on the page.
+   */
+  sections?: readonly string[];
 }
 
-const {locale, variant, home = false} = Astro.props;
+const {locale, variant, home = false, sections = NAV_SECTIONS} = Astro.props;
 
 // Off the home page the anchors would be dead, so point at the home page section instead.
 const hashPrefix = home ? '' : `/${locale}/`;
@@ -28,7 +33,7 @@ const className =
 
 <nav class={className} aria-label={variant === 'desktop' ? 'Primary' : undefined}>
   {
-    NAV_SECTIONS.map((key) => (
+    sections.map((key) => (
       <a
         href={`${hashPrefix}#${key}`}
         data-nav-link={key}

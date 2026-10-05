@@ -23,7 +23,7 @@ export default defineConfig({
     defaultLocale: 'id',
     routing: {
       // Every locale is prefixed (/id, /en), matching the previous Next.js setup.
-      prefixDefaultLocale: true,
+      prefixDefaultLocale: false,
       // src/pages/index.astro already redirects `/` to `/id`. Leaving Astro's own
       // redirect on makes both routes claim `/` and the build warns about the clash.
       redirectToDefaultLocale: false

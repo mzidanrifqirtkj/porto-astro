@@ -1,7 +1,6 @@
 ---
 import {getCollection} from 'astro:content';
 import AnimatedSection from '@/components/AnimatedSection.astro';
-import SectionEyebrow from '@/components/SectionEyebrow.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
 import {t, type Locale} from '@/i18n/ui';
 
@@ -19,8 +18,7 @@ const projects = typeof limit === 'number' ? entries.slice(0, limit) : entries;
 ---
 
 <AnimatedSection id="projects">
-  <div class="mx-auto max-w-2xl">
-    <SectionEyebrow>{t(locale, 'Projects', 'eyebrow')}</SectionEyebrow>
+  <div class="mx-auto max-w-6xl">
     <h2 class="mb-6 font-display text-2xl text-ink">{t(locale, 'Projects', 'heading')}</h2>
 
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">

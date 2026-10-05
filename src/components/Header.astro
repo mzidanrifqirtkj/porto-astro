@@ -10,16 +10,18 @@ interface Props {
   home?: boolean;
   /** Paired blog post slug in the other locale, forwarded to the language switcher. */
   translationSlug?: string;
+  /** Nav entries to show, already filtered by BaseLayout to sections that actually render. */
+  sections?: readonly string[];
 }
 
-const {locale, home = false, translationSlug} = Astro.props;
+const {locale, home = false, translationSlug, sections} = Astro.props;
 ---
 
 <header
   data-site-header
   class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-transparent transition-colors duration-300"
 >
-  <div class="mx-auto flex max-w-2xl items-center justify-between gap-3 px-6 py-4">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-6 py-4">
     <a
       href={`/${locale}`}
       aria-label={t(locale, 'Nav', 'home')}
@@ -29,7 +31,7 @@ const {locale, home = false, translationSlug} = Astro.props;
     </a>
 
     <div class="flex items-center gap-3 md:gap-5">
-      <NavLinks locale={locale} variant="desktop" home={home} />
+      <NavLinks locale={locale} variant="desktop" home={home} sections={sections} />
       <a
         href={`/${locale}/blog`}
         class="hidden font-mono text-xs uppercase tracking-wide text-ink-muted transition-colors hover:text-ink lg:inline"
@@ -85,8 +87,8 @@ const {locale, home = false, translationSlug} = Astro.props;
     hidden
     class="overflow-hidden border-b border-border bg-canvas/95 backdrop-blur-md lg:hidden"
   >
-    <div class="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-6">
-      <NavLinks locale={locale} variant="mobile" home={home} />
+    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-6">
+      <NavLinks locale={locale} variant="mobile" home={home} sections={sections} />
       <a
         href={`/${locale}/blog`}
         class="font-mono text-xs uppercase tracking-wide text-ink-muted transition-colors hover:text-ink"

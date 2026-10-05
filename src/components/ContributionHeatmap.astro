@@ -67,6 +67,11 @@ const monthLabels = weeks.map((week, index) => {
 
 const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 const scale = Array.from({length: LEVELS + 1}, (_, index) => index);
+
+// Sized so a full 53-week year fits the content column (826px of 1104px) with room to spare —
+// the whole point of the section is the shape of the year at a glance.
+const CELL = 'h-3 w-3 rounded-[3px] border';
+const CELL_LABEL = 'flex h-3 items-center pr-1 font-mono text-[10px] leading-none text-ink-muted';
 ---
 
 <div class="overflow-x-auto pb-1">
@@ -84,13 +89,7 @@ const scale = Array.from({length: LEVELS + 1}, (_, index) => index);
 
     <div class="flex gap-[3px]">
       <div class="flex w-8 shrink-0 flex-col gap-[3px]" aria-hidden="true">
-        {
-          DAY_LABELS.map((label) => (
-            <span class="flex h-3 items-center pr-1 font-mono text-[10px] leading-none text-ink-muted">
-              {label}
-            </span>
-          ))
-        }
+        {DAY_LABELS.map((label) => <span class={CELL_LABEL}>{label}</span>)}
       </div>
 
       {
@@ -104,8 +103,8 @@ const scale = Array.from({length: LEVELS + 1}, (_, index) => index);
                     : undefined
                 }
                 class:list={[
-                  'h-3 w-3 rounded-[3px] border border-border',
-                  cell.level === 0 && 'bg-surface',
+                  CELL,
+                  cell.level === 0 && 'border-border bg-surface',
                   cell.level > 0 && cell.gitlab > 0 && 'border-signal/40 bg-signal/70',
                   cell.level > 0 && cell.gitlab === 0 && 'border-ink/30 bg-ink/70'
                 ]}
@@ -119,11 +118,11 @@ const scale = Array.from({length: LEVELS + 1}, (_, index) => index);
     <div class="flex items-center justify-between gap-4 pt-1">
       <div class="flex items-center gap-3 font-mono text-[10px] text-ink-muted">
         <span class="inline-flex items-center gap-1.5">
-          <span class="h-2.5 w-2.5 rounded-[2px] border border-ink/30 bg-ink/70"></span>
+          <span class="h-2 w-2 rounded-[2px] border border-ink/30 bg-ink/70"></span>
           {labels.github}
         </span>
         <span class="inline-flex items-center gap-1.5">
-          <span class="h-2.5 w-2.5 rounded-[2px] border border-signal/40 bg-signal/70"></span>
+          <span class="h-2 w-2 rounded-[2px] border border-signal/40 bg-signal/70"></span>
           {labels.gitlab}
         </span>
       </div>
@@ -134,12 +133,12 @@ const scale = Array.from({length: LEVELS + 1}, (_, index) => index);
           scale.map((level) => (
             <span
               class:list={[
-                'h-3 w-3 rounded-[3px] border border-border',
-                level === 0 && 'bg-surface',
-                level === 1 && 'bg-signal/20',
-                level === 2 && 'bg-signal/40',
-                level === 3 && 'bg-signal/60',
-                level === 4 && 'bg-signal/80'
+                CELL,
+                level === 0 && 'border-border bg-surface',
+                level === 1 && 'border-signal/40 bg-signal/20',
+                level === 2 && 'border-signal/40 bg-signal/40',
+                level === 3 && 'border-signal/40 bg-signal/60',
+                level === 4 && 'border-signal/40 bg-signal/80'
               ]}
             />
           ))

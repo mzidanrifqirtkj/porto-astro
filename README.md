@@ -69,6 +69,9 @@ regenerates it and is run on a schedule by `.github/workflows/refresh-contributi
 Secrets: `GH_CONTRIBUTIONS_TOKEN`, optional `GITLAB_TOKEN`, optional `CF_DEPLOY_HOOK`. Set the GitLab
 handle in `src/lib/social-links.ts` (`GITLAB_USERNAME`) before the first run.
 
+Until the JSON has days, the section and its nav entry are hidden entirely — an empty grid reads as
+"0 contributions". `ContributionHeatmap` uses 9px cells so a full year fits without horizontal scroll.
+
 ## Deploying to Cloudflare
 
 Static output, so no adapter — `wrangler.jsonc` serves `./dist` through the `assets` binding.
@@ -99,7 +102,8 @@ scripts/fetch-contributions.mjs
   `surface`, `border`, `ink`, `ink-muted`, `signal`, the three font families, and the `hero-glow` /
   `avatar-ring` / `pulse-dot` utilities. Use the token names, not raw hex values.
 - Section layout: `AnimatedSection` wrapper (`scroll-mt-24 px-6 py-16`) plus an inner
-  `mx-auto max-w-2xl px-6` container.
+  `mx-auto max-w-6xl` container. The shell is 72rem wide to fill a large viewport; paragraph text
+  is deliberately narrower (`max-w-2xl` / `max-w-xl`) so lines stay a readable length.
 - Nav anchors come from `NAV_SECTIONS` in `src/components/NavLinks.astro`. Adding a section means an
   entry there, a `Nav` key, and a matching `id` on its `AnimatedSection`.
 - Animation must respect `prefers-reduced-motion`. Reveals are CSS transitions toggled by

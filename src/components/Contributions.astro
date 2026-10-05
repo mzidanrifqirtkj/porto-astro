@@ -1,9 +1,7 @@
 ---
 import AnimatedSection from '@/components/AnimatedSection.astro';
-import SectionEyebrow from '@/components/SectionEyebrow.astro';
 import ContributionHeatmap from '@/components/ContributionHeatmap.astro';
-import contributions from '@/data/contributions.json';
-import type {ContributionData} from '@/lib/types';
+import {contributionData as data, hasContributions} from '@/lib/contributions';
 import {t, type Locale} from '@/i18n/ui';
 
 interface Props {
@@ -11,7 +9,10 @@ interface Props {
 }
 
 const {locale} = Astro.props;
-const data = contributions as ContributionData;
+
+// Nothing to show before the first refresh, and an empty heatmap reads as "0 contributions
+// in the last year" to a visitor. Render nothing instead; BaseLayout drops the nav entry to match.
+if (!hasContributions) return null;
 
 const total = data.totals.github + data.totals.gitlab;
 const labels = {
@@ -30,8 +31,7 @@ const updated = data.updatedAt
 ---
 
 <AnimatedSection id="contributions">
-  <div class="mx-auto max-w-2xl">
-    <SectionEyebrow>{t(locale, 'Contributions', 'eyebrow')}</SectionEyebrow>
+  <div class="mx-auto max-w-6xl">
     <h2 class="mb-3 font-display text-2xl text-ink">
       {t(locale, 'Contributions', 'heading')}
     </h2>
@@ -43,15 +43,7 @@ const updated = data.updatedAt
       })}
     </p>
 
-    {
-      data.days.length > 0 ? (
-        <ContributionHeatmap data={data} labels={labels} />
-      ) : (
-        <p class="rounded-2xl border border-border bg-surface p-5 font-mono text-xs text-ink-muted">
-          {t(locale, 'Contributions', 'empty')}
-        </p>
-      )
-    }
+    <ContributionHeatmap data={data} labels={labels} />
 
     {
       updated && (

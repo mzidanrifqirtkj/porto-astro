@@ -33,9 +33,9 @@
     "avatarAlt": "Zidan profile photo",
     "statusPill": "available for work",
     "role": "Full-Stack Developer, back-end focused.",
-    "description": "I build reliable systems with Laravel, Node.js, and Golang.",
+    "description": " I build reliable systems with Laravel, Node.js, and Golang.",
     "currentlyWorkingOnPrefix": "Currently building",
-    "currentProject": "Hospital Information Systems",
+    "currentProject": " Hospital Information Systems ",
     "currentProjectSuffix": "@ PT Medika Digital Nusantara",
     "topSkillsLabel": "top skills",
     "topSkills": [
@@ -49,13 +49,11 @@
     "downloadCv": "Download CV"
   },
   "About": {
-    "eyebrow": "// about",
     "heading": "About",
     "description": "Back-end-focused Full-Stack Developer in Yogyakarta building reliable systems with Laravel, Node.js, and Golang.",
-    "paragraph": "Back-end-focused Full-Stack Developer with a strong track record of architecting clean, scalable solutions to complex technical challenges. I use technologies such as PHP and JavaScript — including Laravel and Node.js — and am currently delving into Golang (Fiber). Skilled across the entire software development lifecycle, from optimizing existing features to designing new ones, and genuinely passionate about exploring new technology. Based in Yogyakarta, Indonesia, currently building Hospital Information Systems as a Full-Stack Developer at PT Medika Digital Nusantara. Bachelor of Informatic System, Universitas AKPRIND Yogyakarta (2021–2025), GPA 3.47."
+    "paragraph": "Full-Stack Developer with a stronger focus on the back end and the ability to build large-scale projects. Experienced across all of software development — from optimizing existing features to designing new ones — using PHP and JavaScript and their frameworks such as Laravel and Node.js, as well as delving into Golang. Highly interested in exploring new technology and hopeful about being useful to others in this field."
   },
   "Skills": {
-    "eyebrow": "// skills",
     "heading": "Skills",
     "categories": [
       {
@@ -113,11 +111,17 @@
           "9Router",
           "Hermes"
         ]
+      },
+      {
+        "name": "Mobile",
+        "items": [
+          "Flutter",
+          "Dart"
+        ]
       }
     ]
   },
   "Experience": {
-    "eyebrow": "~/experience",
     "heading": "Experience",
     "roles": [
       {
@@ -195,24 +199,20 @@
     ]
   },
   "Projects": {
-    "eyebrow": "~/projects",
     "heading": "Projects",
     "description": "Selected projects I have shipped — content management, healthcare systems, dashboards, and mobile apps.",
     "empty": "No projects published yet."
   },
   "Contributions": {
-    "eyebrow": "// contributions",
     "heading": "Contributions",
     "summary": "{total} contributions in the last year ({github} GitHub · {gitlab} GitLab)",
     "less": "Less",
     "more": "More",
     "github": "GitHub",
     "gitlab": "GitLab",
-    "updatedAt": "Updated {date}",
-    "empty": "Contribution data is not available yet."
+    "updatedAt": "Updated {date}"
   },
   "Blog": {
-    "eyebrow": "~/blog",
     "heading": "Blog",
     "description": "Technical notes on Laravel, Golang, system architecture, and things I learn while building.",
     "backToBlog": "Back to blog",

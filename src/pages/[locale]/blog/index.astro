@@ -29,10 +29,9 @@ const dateFormatter = new Intl.DateTimeFormat(locale === 'id' ? 'id-ID' : 'en-US
   description={t(locale, 'Blog', 'description')}
 >
   <section class="px-6 pb-16 pt-40">
-    <div class="mx-auto max-w-2xl">
-      <p class="mb-3 font-mono text-sm text-ink-muted">{t(locale, 'Blog', 'eyebrow')}</p>
+    <div class="mx-auto max-w-6xl">
       <h1 class="mb-4 font-display text-3xl text-ink">{t(locale, 'Blog', 'heading')}</h1>
-      <p class="mb-10 max-w-xl font-body leading-relaxed text-ink-muted">
+      <p class="mb-10 max-w-2xl font-body leading-relaxed text-ink-muted">
         {t(locale, 'Blog', 'description')}
       </p>
 
@@ -40,7 +39,7 @@ const dateFormatter = new Intl.DateTimeFormat(locale === 'id' ? 'id-ID' : 'en-US
         posts.length === 0 ? (
           <p class="font-body text-sm text-ink-muted">{t(locale, 'Blog', 'empty')}</p>
         ) : (
-          <ul class="flex flex-col gap-8">
+          <ul class="flex max-w-xl flex-col gap-8">
             {posts.map((post) => (
               <li class="border-l-2 border-ink-muted/25 pl-6 transition-colors hover:border-ink-muted/60">
                 <a href={`/${locale}/blog/${slugOf(post.id)}`} class="group block">

@@ -49,13 +49,11 @@
     "downloadCv": "Unduh CV"
   },
   "About": {
-    "eyebrow": "// tentang",
     "heading": "Tentang",
     "description": "Full-Stack Developer yang berfokus pada Back-end di Yogyakarta, membangun sistem andal dengan Laravel, Node.js, dan Golang.",
-    "paragraph": "Full-Stack Developer yang lebih berfokus pada bagian Back-end dengan kemampuan mumpuni untuk membuat project berskala besar. Berpengalaman dalam seluruh siklus pengembangan perangkat lunak — mulai dari mengoptimalkan fitur yang ada hingga merancang fitur baru — menggunakan PHP dan JavaScript serta framework seperti Laravel dan Node.js, dan saat ini sedang mendalami Golang (Fiber). Memiliki minat tinggi dalam mengeksplorasi teknologi baru dan berharap dapat berguna bagi orang lain di bidang ini. Berbasis di Yogyakarta, saat ini membangun Sistem Informasi Rumah Sakit sebagai Full-Stack Developer di PT Medika Digital Nusantara. Lulusan Informatika, Universitas AKPRIND Yogyakarta (2021–2025), IPK 3,47."
+    "paragraph": "Full-Stack Developer yang lebih berfokus pada bagian Back-end dengan kemampuan mumpuni untuk membuat project berskala besar. Berpengalaman dalam semua pengembangan perangkat lunak — mulai dari mengoptimalkan fitur yang ada hingga merancang fitur yang baru — menggunakan PHP dan JavaScript serta frameworknya seperti Laravel dan Node.js, serta mendalami teknologi Golang. Memiliki minat yang tinggi dalam mengeksplorasi teknologi baru dan memiliki harapan untuk berguna bagi orang lain dalam bidang ini."
   },
   "Skills": {
-    "eyebrow": "// skill",
     "heading": "Skill",
     "categories": [
       {
@@ -113,11 +111,17 @@
           "9Router",
           "Hermes"
         ]
+      },
+      {
+        "name": "Mobile",
+        "items": [
+          "Flutter",
+          "Dart"
+        ]
       }
     ]
   },
   "Experience": {
-    "eyebrow": "~/pengalaman",
     "heading": "Pengalaman",
     "roles": [
       {
@@ -194,24 +198,20 @@
     ]
   },
   "Projects": {
-    "eyebrow": "~/proyek",
     "heading": "Proyek",
     "description": "Sebagian proyek yang sudah saya kerjakan — manajemen konten, sistem kesehatan, dashboard, dan aplikasi mobile.",
     "empty": "Belum ada proyek yang dipublikasikan."
   },
   "Contributions": {
-    "eyebrow": "// kontribusi",
     "heading": "Kontribusi",
     "summary": "{total} kontribusi dalam setahun terakhir ({github} GitHub · {gitlab} GitLab)",
     "less": "Sedikit",
     "more": "Banyak",
     "github": "GitHub",
     "gitlab": "GitLab",
-    "updatedAt": "Diperbarui {date}",
-    "empty": "Data kontribusi belum tersedia."
+    "updatedAt": "Diperbarui {date}"
   },
   "Blog": {
-    "eyebrow": "~/blog",
     "heading": "Blog",
     "description": "Catatan teknis tentang Laravel, Golang, arsitektur sistem, dan hal-hal yang saya pelajari sambil membangun.",
     "backToBlog": "Kembali ke blog",

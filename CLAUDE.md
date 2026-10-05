@@ -19,7 +19,8 @@ npm run deploy                 # astro build && wrangler deploy
 There is no test runner. `npm run check` plus `npm run build` plus `npm run check:links` is the
 verification loop. `check:links` catches two bug classes that are invisible in source: section
 anchors that only exist on the home page, and language-switcher links that assume both locales
-share a slug.
+share a slug. It scans **internal** routes only — a dead `githubUrl` or `demoUrl` in a project's
+frontmatter passes silently, so re-check those by hand when editing project files.
 
 ## What this is
 
@@ -88,6 +89,12 @@ Adding a nav section means three coordinated edits: an entry in `NAV_SECTIONS`
 (`src/components/NavLinks.astro`), a matching `Nav` key in both locale JSON files, and an `id` on
 the section's `AnimatedSection`.
 
+**A section that hides itself must also leave the nav.** `Contributions.astro` returns `null` while
+`src/data/contributions.json` has no days, so `BaseLayout` computes `navSections` from
+`hasContributions` (`src/lib/contributions.ts`) and passes it down as `sections`; `Header` forwards
+it to both `NavLinks` instances. An unfiltered `#contributions` link would point at an anchor no page
+renders — the exact bug `npm run check:links` reports. Do the same for any new conditional section.
+
 `Header`/`NavLinks` take a `home` prop that `BaseLayout` derives from `path === ''`. On the home
 page the section anchors exist, so nav links are `#about`; on every other page they become
 `/id/#about`, because a bare `#about` there is dead. Nav, blog, and the language switcher sit in
@@ -111,7 +118,10 @@ Cloudflare rebuild).
 - The script reads `GITHUB_USERNAME` / `GITLAB_USERNAME` out of `src/lib/social-links.ts` with a
   regex matching `export const NAME = '...'` — keep those declarations as single-line quoted string
   literals or the script silently reads an empty handle.
-- `GITLAB_USERNAME` is still `''`; set it before the heatmap shows GitLab data.
+- `GITLAB_USERNAME` is still `''`; set it before the heatmap shows GitLab data. Until the JSON has
+  days, the whole section and its nav entry stay hidden rather than showing an empty grid.
+- `ContributionHeatmap` uses 12px cells with 3px gaps (826px) so a full 53-week year fits the
+  content column (1104px) with room to spare.
 
 ## Conventions
 
@@ -119,7 +129,11 @@ Cloudflare rebuild).
   `surface`, `border`, `ink`, `ink-muted`, `signal`, the three font families, and the `hero-glow` /
   `avatar-ring` / `pulse-dot` utilities. Use the token names, not raw hex values.
 - Section layout: `AnimatedSection` wrapper (`scroll-mt-24 px-6 py-16`) plus an inner
-  `mx-auto max-w-2xl px-6` container.
+  `mx-auto max-w-6xl` container. **Two width layers, don't collapse them.** The shell (header,
+  footer, sections, grids) is 72rem/1152px so the page fills a wide viewport; paragraph text stays
+  narrower — `max-w-2xl` for `text-base` copy, `max-w-xl` for the 14px blog list — because a 1152px
+  line runs ~150 characters and reads slowly. Cards are flexible (`aspect-video` thumbnails derive
+  their height), so a grid column-count change needs no card edit.
 - Animation must respect `prefers-reduced-motion`; reveals are CSS transitions toggled by
   `IntersectionObserver`, and the page stays fully visible without JavaScript.
 - Client JavaScript is inline `<script>` inside `.astro` files, only where interaction genuinely
