@@ -1,7 +1,7 @@
 {
   "Meta": {
     "title": "Muhammad Zidan Rifqi Ramadhan — Full-Stack Developer",
-    "description": "Portfolio of Muhammad Zidan Rifqi Ramadhan, a back-end-focused Full-Stack Developer building reliable systems with Laravel, Node.js, and Golang."
+    "description": "Portfolio of Muhammad Zidan Rifqi Ramadhan, a back-end-focused Full-Stack Developer building hospital and clinic information systems with PHP, Laravel, MySQL, and Oracle. and am currently learning Go"
   },
   "Nav": {
     "home": "Home",
@@ -13,6 +13,10 @@
     "closeMenu": "Close menu",
     "blog": "Blog",
     "contributions": "Contributions"
+  },
+  "Theme": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme"
   },
   "ScrollToTop": {
     "backToTop": "Back to top"
@@ -31,9 +35,9 @@
     "greeting": "Hi, I'm {name}.",
     "name": "Zidan",
     "avatarAlt": "Zidan profile photo",
-    "statusPill": "available for work",
+    "statusPill": "available from early January 2027",
     "role": "Full-Stack Developer, back-end focused.",
-    "description": " I build reliable systems with Laravel, Node.js, and Golang.",
+    "description": " I build and maintain hospital and clinic information systems with PHP, Laravel, MySQL, and Oracle. and am currently learning Go",
     "currentlyWorkingOnPrefix": "Currently building",
     "currentProject": " Hospital Information Systems ",
     "currentProjectSuffix": "@ PT Medika Digital Nusantara",
@@ -41,17 +45,15 @@
     "topSkills": [
       "php",
       "laravel",
-      "node.js",
-      "golang",
-      "docker"
+      "go"
     ],
     "sayHello": "Say Hello",
     "downloadCv": "Download CV"
   },
   "About": {
     "heading": "About",
-    "description": "Back-end-focused Full-Stack Developer in Yogyakarta building reliable systems with Laravel, Node.js, and Golang.",
-    "paragraph": "Full-Stack Developer with a stronger focus on the back end and the ability to build large-scale projects. Experienced across all of software development — from optimizing existing features to designing new ones — using PHP and JavaScript and their frameworks such as Laravel and Node.js, as well as delving into Golang. Highly interested in exploring new technology and hopeful about being useful to others in this field."
+    "description": "Back-end-focused Full-Stack Developer in Yogyakarta building hospital and clinic information systems with PHP, Laravel, MySQL, and Oracle.",
+    "paragraph": "Full-Stack Developer with a stronger focus on the back end and under 2 years of experience building and maintaining hospital and clinic information systems using PHP, Laravel, MySQL, and Oracle. Experienced with Docker, CI/CD, Redis caching, and production incident handling. Familiar with Golang and Flutter. Available on-site from early January 2027, and open to relocation and remote roles."
   },
   "Skills": {
     "heading": "Skills",
@@ -83,9 +85,7 @@
           "MySQL",
           "PostgreSQL",
           "MongoDB",
-          "MS Access",
-          "Oracle",
-          "SQLite"
+          "Oracle"
         ]
       },
       {
@@ -96,6 +96,9 @@
           "GitLab",
           "Docker",
           "Redis",
+          "New Relic",
+          "Elasticsearch",
+          "RabbitMQ",
           "AWS",
           "Tencent Cloud",
           "Cloudflare",
@@ -106,17 +109,13 @@
         "name": "AI Tools",
         "items": [
           "LLM",
-          "OpenCode",
-          "Claude Code",
-          "9Router",
-          "Hermes"
+          "Claude Code"
         ]
       },
       {
         "name": "Mobile",
         "items": [
-          "Flutter",
-          "Dart"
+          "Flutter"
         ]
       }
     ]
@@ -130,15 +129,14 @@
         "location": "Yogyakarta, Indonesia",
         "dateRange": "Jan 2026 — Present",
         "bullets": [
-          "Develop and maintain comprehensive Hospital Information Systems for multiple healthcare institutions using PHP, CSS, JavaScript, and OracleDB.",
-          "Architect and implement clinic web applications focused on ease of use and maintenance using Laravel and MySQL.",
-          "Create web interfaces based on the framework of the Analyzer System.",
+          "Develop and maintain comprehensive Hospital Information Systems for multiple healthcare institutions using PHP, CSS, JavaScript, and Oracle Database.",
+          "Build clinic web applications with Laravel and MySQL, focused on usability and maintainability.",
+          "Built a web interface based on the framework of the Analyzer System.",
           "Optimize complex database schemas and queries to ensure accurate, real-time data usage.",
-          "Use Docker to ensure consistency across system environments.",
-          "Use pipelines and CI/CD to simplify deployment to the server.",
-          "Manage server environments with New Relic to monitor application health, diagnose issues through log analysis, and resolve production incidents with minimal downtime.",
-          "Implement data caching strategies using Redis, successfully reducing API response latency.",
-          "Integrate AI-assisted development tools like Claude Code into daily workflow, reducing boilerplate generation time by ~50% and accelerating feature delivery."
+          "Use Docker and GitLab CI/CD pipelines to keep environments consistent and simplify deployment.",
+          "Monitor application health with New Relic, diagnose issues through logs, and handle production incidents.",
+          "Implemented data caching strategies using Redis to store frequently accessed database queries, successfully reducing API response latency.",
+          "Use Claude Code to speed up boilerplate and feature development."
         ],
         "techStack": [
           "PHP",
@@ -150,7 +148,9 @@
           "Oracle",
           "MySQL",
           "GitLab",
-          "Redis"
+          "Redis",
+          "Docker",
+          "New Relic"
         ]
       },
       {
@@ -159,13 +159,13 @@
         "location": "Yogyakarta, Indonesia",
         "dateRange": "Aug 2025 — Jan 2026",
         "bullets": [
-          "Developed 10+ web and mobile applications for clients in the industrial sector using Laravel, Golang, Flutter, React.js, Bootstrap, and Tailwind CSS.",
-          "Built a responsive admin dashboard with React.js and Tailwind CSS, displaying real-time analytics via charts and tables.",
-          "Built systems using Laravel libraries such as Spatie, Breeze, Octane, and Inertia to simplify and accelerate development.",
-          "Built mobile apps for employee management — attendance, task distribution, overtime — with lazy loading and real-time data using Flutter and Golang.",
-          "Designed and implemented a RESTful API used by 10+ daily active users, handling transactions at 99.9% uptime using a Laravel + Golang microservices architecture.",
-          "Implemented Figma-based responsive layouts with Tailwind CSS, and used AWS S3 for file storage.",
-          "Collaborated with a team of 2–3 people using Git/GitHub, applying Agile and Kanban methodologies."
+          "Continued development and maintained web and mobile applications for clients using Laravel, React, Tailwind CSS, and Flutter.",
+          "Developed features and maintained a Laravel-based microservice architecture.",
+          "Worked on an employee attendance application with a Flutter frontend and a Golang backend.",
+          "Built a responsive admin dashboard with React and Tailwind CSS, featuring charts and tables.",
+          "Used Laravel packages such as Spatie, Breeze, and Inertia to speed up development.",
+          "Implemented Figma designs with Tailwind CSS and used AWS S3 for file storage.",
+          "Worked in a 2–3 person team using Git/GitHub and Kanban."
         ],
         "techStack": [
           "Laravel",
@@ -175,6 +175,7 @@
           "Flutter",
           "Golang",
           "MySQL",
+          "GitHub Actions",
           "AWS S3"
         ]
       },
@@ -184,13 +185,12 @@
         "location": "Yogyakarta, Indonesia",
         "dateRange": "Oct 2024 — Jan 2025",
         "bullets": [
-          "Led development of SWAKARTA, a Waqf-based CMS platform with 20 customizable templates on Laravel MVC, enabling non-technical users to launch a professional website in under 30 minutes.",
-          "Built a modular template system using Laravel MVC architecture to support dynamic content management.",
-          "Collaborated with a cross-functional team of 4–6 members using Git/GitHub for version control, applying Agile and Kanban (Trello) methodologies."
+          "Contributed to SWAKARTA, a Waqf-based CMS platform with 20 customizable templates built on Laravel MVC, letting non-technical users launch websites in under 30 minutes.",
+          "Built a modular template system using Laravel MVC to support dynamic content management.",
+          "Worked in a 4–6 member team using Git/GitHub and Kanban (Trello)."
         ],
         "techStack": [
           "Laravel",
-          "Breeze",
           "Bootstrap",
           "JavaScript",
           "MySQL"

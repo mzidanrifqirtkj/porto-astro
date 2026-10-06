@@ -10,7 +10,7 @@ const {category} = Astro.props;
 ---
 
 <div
-  class="rounded-2xl border border-border bg-surface p-5 transition-all duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-ink-muted/50 hover:shadow-[0_0_24px_rgba(242,242,240,0.04)]"
+  class="rounded-2xl border border-border bg-surface p-5 transition-all duration-200 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-ink-muted/50 hover:shadow-[0_0_24px_color-mix(in_srgb,var(--color-ink)_4%,transparent)]"
 >
   <h3 class="mb-3 font-mono text-xs uppercase tracking-wide text-ink-muted">{category.name}</h3>
   <div class="flex flex-wrap gap-2">

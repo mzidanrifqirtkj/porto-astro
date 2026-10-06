@@ -1,0 +1,92 @@
+---
+import {t, type Locale} from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const {locale} = Astro.props;
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  aria-label={t(locale, 'Theme', 'toLight')}
+  data-to-light={t(locale, 'Theme', 'toLight')}
+  data-to-dark={t(locale, 'Theme', 'toDark')}
+  class="shrink-0 text-ink-muted transition-colors hover:text-ink"
+>
+  <!-- Sun: shown in dark, the theme a click switches to. -->
+  <svg
+    class="light:hidden"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path
+      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+    ></path>
+  </svg>
+  <svg
+    class="hidden light:block"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+  </svg>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  if (button) {
+    const current = () => (root.dataset.theme === 'light' ? 'light' : 'dark');
+
+    const syncLabel = () => {
+      const label = current() === 'light' ? button.dataset.toDark : button.dataset.toLight;
+      button.setAttribute('aria-label', label ?? '');
+    };
+
+    const stored = () => {
+      try {
+        return localStorage.getItem('theme');
+      } catch {
+        return null;
+      }
+    };
+
+    syncLabel();
+
+    button.addEventListener('click', () => {
+      const next = current() === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        // Private mode: the choice just lasts for this page view.
+      }
+      syncLabel();
+    });
+
+    // Until the visitor picks a theme, keep following the system setting live.
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+      if (stored()) return;
+      root.dataset.theme = event.matches ? 'light' : 'dark';
+      syncLabel();
+    });
+  }
+</script>

@@ -90,6 +90,22 @@ const navSections = hasContributions
     <script is:inline>
       // Enables the scroll-reveal styles. Without JS the content stays visible.
       document.documentElement.classList.add('js');
+
+      // Applies the theme before first paint so there is no flash. A stored choice wins;
+      // otherwise follow the system. Storage can throw in private mode.
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch (e) {}
+        var theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark';
+        document.documentElement.dataset.theme = theme;
+      })();
     </script>
   </head>
   <body>

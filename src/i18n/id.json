@@ -1,7 +1,7 @@
 {
   "Meta": {
     "title": "Muhammad Zidan Rifqi Ramadhan — Full-Stack Developer",
-    "description": "Portofolio Muhammad Zidan Rifqi Ramadhan, Full-Stack Developer yang berfokus pada Back-end, membangun sistem yang andal dengan Laravel, Node.js, dan Golang."
+    "description": "Portofolio Muhammad Zidan Rifqi Ramadhan, Full-Stack Developer yang berfokus pada Back-end, membangun sistem yang andal dengan PHP, Laravel, MySQL, dan Oracle. Dan sedang mendalami Go"
   },
   "Nav": {
     "home": "Beranda",
@@ -13,6 +13,10 @@
     "closeMenu": "Tutup menu",
     "blog": "Blog",
     "contributions": "Kontribusi"
+  },
+  "Theme": {
+    "toLight": "Ganti ke tema terang",
+    "toDark": "Ganti ke tema gelap"
   },
   "ScrollToTop": {
     "backToTop": "Kembali ke atas"
@@ -31,27 +35,25 @@
     "greeting": "Hai, saya {name}.",
     "name": "Zidan",
     "avatarAlt": "Foto profil Zidan",
-    "statusPill": "terbuka untuk peluang",
+    "statusPill": "tersedia mulai awal Januari 2027",
     "role": "Full-Stack Developer, fokus back-end.",
-    "description": "Saya membangun sistem yang andal dengan Laravel, Node.js, dan Golang.",
+    "description": "Saya membangun dan memelihara sistem informasi rumah sakit dan klinik dengan PHP, Laravel, MySQL, dan Oracle. Dan sedang mendalami Go",
     "currentlyWorkingOnPrefix": "Saat ini membangun",
-    "currentProject": "Sistem Informasi Rumah Sakit",
+    "currentProject": " Sistem Informasi Rumah Sakit ",
     "currentProjectSuffix": "di PT Medika Digital Nusantara",
     "topSkillsLabel": "skill utama",
     "topSkills": [
       "php",
       "laravel",
-      "node.js",
-      "golang",
-      "docker"
+      "go"
     ],
     "sayHello": "Sapa Saya",
     "downloadCv": "Unduh CV"
   },
   "About": {
     "heading": "Tentang",
-    "description": "Full-Stack Developer yang berfokus pada Back-end di Yogyakarta, membangun sistem andal dengan Laravel, Node.js, dan Golang.",
-    "paragraph": "Full-Stack Developer yang lebih berfokus pada bagian Back-end dengan kemampuan mumpuni untuk membuat project berskala besar. Berpengalaman dalam semua pengembangan perangkat lunak — mulai dari mengoptimalkan fitur yang ada hingga merancang fitur yang baru — menggunakan PHP dan JavaScript serta frameworknya seperti Laravel dan Node.js, serta mendalami teknologi Golang. Memiliki minat yang tinggi dalam mengeksplorasi teknologi baru dan memiliki harapan untuk berguna bagi orang lain dalam bidang ini."
+    "description": "Full-Stack Developer yang berfokus pada Back-end di Yogyakarta, membangun sistem informasi rumah sakit dan klinik dengan PHP, Laravel, MySQL, dan Oracle.",
+    "paragraph": "Full-Stack Developer yang lebih berfokus pada bagian Back-end dengan pengalaman kurang dari 2 tahun membangun dan memelihara sistem informasi rumah sakit dan klinik menggunakan PHP, Laravel, MySQL, dan Oracle. Berpengalaman dengan Docker, CI/CD, caching Redis, dan penanganan insiden produksi. Familiar dengan Golang dan Flutter. Siap bekerja onsite mulai awal Januari 2027, serta terbuka untuk relokasi maupun posisi remote."
   },
   "Skills": {
     "heading": "Skill",
@@ -83,9 +85,7 @@
           "MySQL",
           "PostgreSQL",
           "MongoDB",
-          "MS Access",
-          "Oracle",
-          "SQLite"
+          "Oracle"
         ]
       },
       {
@@ -96,6 +96,9 @@
           "GitLab",
           "Docker",
           "Redis",
+          "New Relic",
+          "Elasticsearch",
+          "RabbitMQ",
           "AWS",
           "Tencent Cloud",
           "Cloudflare",
@@ -106,17 +109,13 @@
         "name": "AI Tools",
         "items": [
           "LLM",
-          "OpenCode",
-          "Claude Code",
-          "9Router",
-          "Hermes"
+          "Claude Code"
         ]
       },
       {
         "name": "Mobile",
         "items": [
-          "Flutter",
-          "Dart"
+          "Flutter"
         ]
       }
     ]
@@ -130,14 +129,14 @@
         "location": "Yogyakarta, Indonesia",
         "dateRange": "Jan 2026 — Sekarang",
         "bullets": [
-          "Mengembangkan dan memelihara Sistem Informasi Rumah Sakit yang komprehensif untuk berbagai institusi layanan kesehatan menggunakan PHP, CSS, JavaScript, dan OracleDB.",
-          "Merancang dan mengimplementasikan aplikasi web untuk klinik dengan fokus pada kemudahan penggunaan dan pemeliharaan menggunakan Laravel dan MySQL.",
-          "Mengoptimalkan skema basis data dan query untuk memastikan penggunaan data yang akurat dan real-time.",
-          "Menjaga konsistensi sistem menggunakan Docker.",
-          "Menggunakan pipeline dan CI/CD untuk mempermudah proses deploy ke server.",
-          "Mengelola lingkungan server dan memantau kesehatan aplikasi menggunakan New Relic, mendiagnosis masalah melalui log, dan menangani insiden produksi secepat mungkin.",
-          "Menerapkan strategi caching menggunakan Redis, berhasil mengurangi latensi respons API.",
-          "Mengintegrasikan alat pengembangan berbasis AI seperti Claude Code ke dalam alur kerja, mengurangi waktu pembuatan boilerplate hingga ~50% dan mempercepat peluncuran fitur."
+          "Mengembangkan dan memelihara Sistem Informasi Rumah Sakit yang komprehensif untuk berbagai institusi layanan kesehatan menggunakan PHP, CSS, JavaScript, dan Oracle Database.",
+          "Membangun aplikasi web klinik dengan Laravel dan MySQL, berfokus pada kemudahan penggunaan dan pemeliharaan.",
+          "Membangun antarmuka web berbasis framework Analyzer System.",
+          "Mengoptimalkan skema basis data dan query yang kompleks untuk memastikan penggunaan data yang akurat dan real-time.",
+          "Menggunakan Docker dan pipeline GitLab CI/CD untuk menjaga konsistensi environment dan mempermudah deployment.",
+          "Memantau kesehatan aplikasi dengan New Relic, mendiagnosis masalah melalui log, dan menangani insiden produksi.",
+          "Menerapkan strategi caching menggunakan Redis untuk menyimpan query basis data yang sering diakses, berhasil mengurangi latensi respons API.",
+          "Menggunakan Claude Code untuk mempercepat pembuatan boilerplate dan pengembangan fitur."
         ],
         "techStack": [
           "PHP",
@@ -149,7 +148,9 @@
           "Oracle",
           "MySQL",
           "GitLab",
-          "Redis"
+          "Redis",
+          "Docker",
+          "New Relic"
         ]
       },
       {
@@ -158,13 +159,13 @@
         "location": "Yogyakarta, Indonesia",
         "dateRange": "Agu 2025 — Jan 2026",
         "bullets": [
-          "Mengembangkan lebih dari 10 aplikasi web dan mobile untuk klien di sektor industri menggunakan Laravel, Golang, Flutter, React.js, Bootstrap, dan Tailwind CSS.",
-          "Membuat dashboard admin yang responsif menggunakan React.js dan Tailwind CSS, menampilkan analitik real-time melalui grafik dan tabel.",
-          "Membangun sistem menggunakan library Laravel seperti Spatie, Breeze, Octane, dan Inertia untuk menyederhanakan dan mempercepat pengembangan.",
-          "Membangun aplikasi mobile untuk manajemen karyawan — presensi, pembagian tugas, lembur — dengan lazy loading dan data real-time menggunakan Flutter dan Golang.",
-          "Merancang dan mengimplementasikan API RESTful yang digunakan oleh lebih dari 10 pengguna aktif harian, menangani transaksi dengan tingkat ketersediaan 99,9% menggunakan arsitektur microservice Laravel + Golang.",
-          "Mengimplementasikan layout responsif berbasis Figma dengan Tailwind CSS, serta menggunakan AWS S3 untuk penyimpanan berkas.",
-          "Bekerja sama dengan tim 2–3 orang menggunakan Git/GitHub, menerapkan metodologi Agile dan Kanban."
+          "Melanjutkan pengembangan dan memelihara aplikasi web dan mobile untuk klien menggunakan Laravel, React, Tailwind CSS, dan Flutter.",
+          "Mengembangkan fitur dan memelihara arsitektur microservice berbasis Laravel.",
+          "Mengerjakan aplikasi presensi karyawan dengan frontend Flutter dan backend Golang.",
+          "Membuat dashboard admin yang responsif dengan React dan Tailwind CSS, dilengkapi grafik dan tabel.",
+          "Menggunakan package Laravel seperti Spatie, Breeze, dan Inertia untuk mempercepat pengembangan.",
+          "Mengimplementasikan desain Figma dengan Tailwind CSS dan menggunakan AWS S3 untuk penyimpanan berkas.",
+          "Bekerja dalam tim 2–3 orang menggunakan Git/GitHub dan Kanban."
         ],
         "techStack": [
           "Laravel",
@@ -174,6 +175,7 @@
           "Flutter",
           "Golang",
           "MySQL",
+          "GitHub Actions",
           "AWS S3"
         ]
       },
@@ -183,13 +185,12 @@
         "location": "Yogyakarta, Indonesia",
         "dateRange": "Okt 2024 — Jan 2025",
         "bullets": [
-          "Turut andil dalam pengembangan SWAKARTA, sebuah platform CMS berbasis Wakaf dengan 20 template yang dapat disesuaikan di atas Laravel MVC, memungkinkan pengguna non-teknis meluncurkan situs profesional dalam waktu kurang dari 30 menit.",
-          "Membangun sistem template modular menggunakan arsitektur MVC Laravel untuk mendukung pengelolaan konten secara dinamis.",
-          "Bekerja sama dengan tim lintas divisi 4–6 anggota menggunakan Git/GitHub untuk pengendalian versi, menerapkan metodologi Agile dan Kanban (Trello)."
+          "Berkontribusi pada SWAKARTA, platform CMS berbasis Wakaf dengan 20 template yang dapat disesuaikan di atas Laravel MVC, memungkinkan pengguna non-teknis meluncurkan situs dalam waktu kurang dari 30 menit.",
+          "Membangun sistem template modular menggunakan Laravel MVC untuk mendukung pengelolaan konten secara dinamis.",
+          "Bekerja dalam tim 4–6 anggota menggunakan Git/GitHub dan Kanban (Trello)."
         ],
         "techStack": [
           "Laravel",
-          "Breeze",
           "Bootstrap",
           "JavaScript",
           "MySQL"
