@@ -10,8 +10,8 @@ export const GET: APIRoute = async () => {
   );
 
   return rss({
-    title: t('id', 'Meta', 'title'),
-    description: t('id', 'Meta', 'description'),
+    title: t('en', 'Meta', 'title'),
+    description: t('en', 'Meta', 'description'),
     site: SITE_URL,
     items: posts.map((post) => {
       const [locale, ...rest] = post.id.split('/');
@@ -22,6 +22,6 @@ export const GET: APIRoute = async () => {
         link: `/${locale}/blog/${rest.join('/')}`
       };
     }),
-    customData: '<language>id</language>'
+    customData: '<language>en</language>'
   });
 };

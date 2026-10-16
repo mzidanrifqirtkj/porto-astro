@@ -11,8 +11,7 @@
     "projects": "Proyek",
     "openMenu": "Buka menu",
     "closeMenu": "Tutup menu",
-    "blog": "Blog",
-    "contributions": "Kontribusi"
+    "blog": "Blog"
   },
   "Theme": {
     "toLight": "Ganti ke tema terang",
@@ -201,16 +200,12 @@
   "Projects": {
     "heading": "Proyek",
     "description": "Sebagian proyek yang sudah saya kerjakan — manajemen konten, sistem kesehatan, dashboard, dan aplikasi mobile.",
-    "empty": "Belum ada proyek yang dipublikasikan."
-  },
-  "Contributions": {
-    "heading": "Kontribusi",
-    "summary": "{total} kontribusi dalam setahun terakhir ({github} GitHub · {gitlab} GitLab)",
-    "less": "Sedikit",
-    "more": "Banyak",
-    "github": "GitHub",
-    "gitlab": "GitLab",
-    "updatedAt": "Diperbarui {date}"
+    "empty": "Belum ada proyek yang dipublikasikan.",
+    "backToProjects": "← Kembali ke proyek",
+    "overview": "Ringkasan",
+    "techStack": "Teknologi",
+    "visitDemo": "Lihat demo",
+    "viewCode": "Lihat kode"
   },
   "Blog": {
     "heading": "Blog",

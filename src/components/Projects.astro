@@ -1,37 +1,45 @@
 ---
 import {getCollection} from 'astro:content';
 import AnimatedSection from '@/components/AnimatedSection.astro';
-import ProjectCard from '@/components/ProjectCard.astro';
+import ProjectRow from '@/components/ProjectRow.astro';
+import {groupByYear} from '@/lib/projects';
 import {t, type Locale} from '@/i18n/ui';
 
 interface Props {
   locale: Locale;
-  limit?: number;
 }
 
-const {locale, limit} = Astro.props;
+const {locale} = Astro.props;
 
-const entries = (await getCollection('projects', ({data}) => data.locale === locale)).sort(
-  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)
+const groups = groupByYear(
+  await getCollection('projects', ({data}) => data.locale === locale)
 );
-const projects = typeof limit === 'number' ? entries.slice(0, limit) : entries;
 ---
 
 <AnimatedSection id="projects">
   <div class="mx-auto max-w-6xl">
     <h2 class="mb-6 font-display text-2xl text-ink">{t(locale, 'Projects', 'heading')}</h2>
 
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="flex flex-col gap-10">
       {
-        projects.map((project) => (
-          <ProjectCard
-            title={project.data.title}
-            description={project.data.description}
-            techStack={project.data.techStack}
-            demoUrl={project.data.demoUrl}
-            githubUrl={project.data.githubUrl}
-            image={project.data.image}
-          />
+        groups.map((group) => (
+          <section>
+            <h3 class="mb-4 font-mono text-xs uppercase tracking-wide text-ink-muted">
+              {group.year}
+            </h3>
+            <ul class="divide-y divide-border border-t border-border">
+              {group.projects.map((project) => (
+                <ProjectRow
+                  title={project.data.title}
+                  description={project.data.description}
+                  techStack={project.data.techStack}
+                  href={`/${locale}/projects/${project.id.split('/').slice(1).join('/')}`}
+                  demoUrl={project.data.demoUrl}
+                  githubUrl={project.data.githubUrl}
+                />
+              ))}
+            </ul>
+          </section>
         ))
       }
     </div>

@@ -16,6 +16,8 @@ const blog = defineCollection({
     locale: z.enum(['id', 'en']),
     /** Shared across translations of the same post. Slugs may differ per language, this pairs them. */
     translationKey: z.string().optional(),
+    /** Absolute URL or site-relative path. Falls back to the site-wide OG image. */
+    ogImage: z.string().nullable().default(null),
     draft: z.boolean().default(false)
   })
 });
@@ -28,9 +30,12 @@ const projects = defineCollection({
     techStack: z.array(z.string()).default([]),
     demoUrl: z.url().nullable().default(null),
     githubUrl: z.url().nullable().default(null),
-    image: z.string().nullable().default(null),
     locale: z.enum(['id', 'en']),
-    order: z.number().default(0)
+    /**
+     * Month precision is enough. Drives the sort (newest first) and the year headings,
+     * so it replaces the two hand-maintained integers that used to sit here.
+     */
+    date: z.coerce.date()
   })
 });
 

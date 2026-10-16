@@ -9,8 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "check:links": "node scripts/check-links.mjs",
-    "deploy": "astro build && wrangler deploy",
-    "refresh-contributions": "node scripts/fetch-contributions.mjs"
+    "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.2",

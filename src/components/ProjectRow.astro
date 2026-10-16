@@ -1,0 +1,71 @@
+---
+import GithubIcon from '@/components/icons/GithubIcon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  techStack: string[];
+  /** Detail-page path, e.g. `/en/projects/swakarta`. */
+  href: string;
+  demoUrl?: string | null;
+  githubUrl?: string | null;
+}
+
+const {title, description, techStack, href, demoUrl, githubUrl} = Astro.props;
+---
+
+<li class="flex items-start justify-between gap-6 py-5">
+  <div class="min-w-0">
+    <h3 class="font-display text-base text-ink">
+      <a href={href} class="transition-colors hover:text-signal">{title}</a>
+    </h3>
+    <p class="mt-1.5 max-w-xl font-body text-sm leading-relaxed text-ink-muted">{description}</p>
+    {
+      techStack.length > 0 && (
+        <p class="mt-2 font-mono text-xs text-ink-muted/70">{techStack.join(' · ')}</p>
+      )
+    }
+  </div>
+
+  {
+    /* Siblings of the title anchor, never nested inside it — nested anchors are invalid HTML. */
+    (demoUrl || githubUrl) && (
+      <div class="flex shrink-0 items-center gap-3 pt-0.5">
+        {demoUrl && (
+          <a
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${title} — live demo`}
+            class="text-ink-muted transition-colors hover:text-ink"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            </svg>
+          </a>
+        )}
+        {githubUrl && (
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${title} — source code`}
+            class="text-ink-muted transition-colors hover:text-ink"
+          >
+            <GithubIcon size={16} />
+          </a>
+        )}
+      </div>
+    )
+  }
+</li>

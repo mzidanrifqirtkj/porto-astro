@@ -1,7 +1,8 @@
 ---
 import {getCollection} from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ProjectCard from '@/components/ProjectCard.astro';
+import ProjectRow from '@/components/ProjectRow.astro';
+import {groupByYear} from '@/lib/projects';
 import {LOCALES, resolveLocale, t} from '@/i18n/ui';
 
 export function getStaticPaths() {
@@ -10,9 +11,9 @@ export function getStaticPaths() {
 
 const locale = resolveLocale(Astro.params.locale);
 
-const projects = (
+const groups = groupByYear(
   await getCollection('projects', ({data}) => data.locale === locale)
-).sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+);
 ---
 
 <BaseLayout
@@ -25,23 +26,32 @@ const projects = (
     <div class="mx-auto max-w-6xl">
       <h1 class="mb-8 font-display text-3xl text-ink">{t(locale, 'Projects', 'heading')}</h1>
 
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="flex flex-col gap-10">
         {
-          projects.map((project) => (
-            <ProjectCard
-              title={project.data.title}
-              description={project.data.description}
-              techStack={project.data.techStack}
-              demoUrl={project.data.demoUrl}
-              githubUrl={project.data.githubUrl}
-              image={project.data.image}
-            />
+          groups.map((group) => (
+            <section>
+              <h2 class="mb-4 font-mono text-xs uppercase tracking-wide text-ink-muted">
+                {group.year}
+              </h2>
+              <ul class="divide-y divide-border border-t border-border">
+                {group.projects.map((project) => (
+                  <ProjectRow
+                    title={project.data.title}
+                    description={project.data.description}
+                    techStack={project.data.techStack}
+                    href={`/${locale}/projects/${project.id.split('/').slice(1).join('/')}`}
+                    demoUrl={project.data.demoUrl}
+                    githubUrl={project.data.githubUrl}
+                  />
+                ))}
+              </ul>
+            </section>
           ))
         }
       </div>
 
       {
-        projects.length === 0 && (
+        groups.length === 0 && (
           <p class="font-body text-sm text-ink-muted">{t(locale, 'Projects', 'empty')}</p>
         )
       }

@@ -1,6 +1,8 @@
 ---
-// Every locale is prefixed, so `/` hands off to the default locale.
-// Required by i18n.routing.redirectToDefaultLocale — Astro also generates its own
-// redirect route for `/` when this file is present.
-return Astro.redirect('/id');
+// Every locale is prefixed, so `/` hands off to the default locale (English).
+// 301 makes Astro's static redirect template emit a 0-second refresh instead of 2
+// (`node_modules/astro/dist/core/routing/3xx.js`), so there is no blank page first.
+// `i18n.routing.redirectToDefaultLocale` is false in astro.config.mjs precisely so
+// this file owns `/` — Astro does not generate a competing route.
+return Astro.redirect('/en', 301);
 ---

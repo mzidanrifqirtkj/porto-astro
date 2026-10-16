@@ -1,14 +1,25 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+
+// `path` is what marks this as a non-home route: it makes NavLinks emit `/<locale>/#about`
+// instead of a bare `#about`, which would resolve against a page that has no such section.
+// No language switcher — there is no translation of a 404 — and no canonical, since the
+// URL the visitor asked for does not exist.
 ---
 
-<BaseLayout locale="id" title="404 — Halaman tidak ditemukan">
+<BaseLayout
+  locale="en"
+  path="/404"
+  title="404 — Page not found"
+  showSwitcher={false}
+  noindex
+>
   <section class="px-6 pb-16 pt-40">
     <div class="mx-auto max-w-6xl">
       <p class="mb-3 font-mono text-sm text-ink-muted">// 404</p>
-      <h1 class="mb-4 font-display text-3xl text-ink">Halaman tidak ditemukan</h1>
-      <a href="/id" class="font-mono text-xs text-ink-muted transition-colors hover:text-ink">
-        ← Kembali ke beranda
+      <h1 class="mb-4 font-display text-3xl text-ink">Page not found</h1>
+      <a href="/en" class="font-mono text-xs text-ink-muted transition-colors hover:text-ink">
+        ← Back to home
       </a>
     </div>
   </section>

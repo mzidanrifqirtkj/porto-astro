@@ -1,0 +1,95 @@
+---
+import {getCollection, render} from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Chip from '@/components/Chip.astro';
+import GithubIcon from '@/components/icons/GithubIcon.astro';
+import {resolveLocale, t} from '@/i18n/ui';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects');
+
+  return entries.map((entry) => {
+    const [locale, ...rest] = entry.id.split('/');
+    return {
+      params: {locale, slug: rest.join('/')},
+      props: {entry}
+    };
+  });
+}
+
+const locale = resolveLocale(Astro.params.locale);
+const {entry} = Astro.props;
+const {Content} = await render(entry);
+const {title, description, techStack, demoUrl, githubUrl, date} = entry.data;
+// UTC so the year cannot shift by a day depending on the build machine's timezone.
+const year = date.getUTCFullYear();
+---
+
+<BaseLayout
+  locale={locale}
+  path={`/projects/${Astro.params.slug}`}
+  title={`${title} — ${t(locale, 'Meta', 'title')}`}
+  description={description}
+>
+  <article class="px-6 pb-16 pt-40">
+    <div class="mx-auto max-w-2xl">
+      <a
+        href={`/${locale}/projects`}
+        class="font-mono text-xs text-ink-muted transition-colors hover:text-ink"
+      >
+        {t(locale, 'Projects', 'backToProjects')}
+      </a>
+
+      <p class="mt-8 font-mono text-xs text-ink-muted">{year}</p>
+      <h1 class="mt-2 font-display text-3xl text-ink">{title}</h1>
+      <p class="mt-4 max-w-xl font-body leading-relaxed text-ink-muted">{description}</p>
+
+      {
+        techStack.length > 0 && (
+          <div class="mt-6">
+            <h2 class="mb-3 font-mono text-xs uppercase tracking-wide text-ink-muted">
+              {t(locale, 'Projects', 'techStack')}
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              {techStack.map((tech) => (
+                <Chip>{tech}</Chip>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      {
+        (demoUrl || githubUrl) && (
+          <div class="mt-6 flex items-center gap-3 font-body text-sm">
+            {demoUrl && (
+              <a
+                href={demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-ink transition-colors hover:border-ink-muted"
+              >
+                {t(locale, 'Projects', 'visitDemo')}
+              </a>
+            )}
+            {githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-ink transition-colors hover:border-ink-muted"
+              >
+                <GithubIcon size={16} />
+                {t(locale, 'Projects', 'viewCode')}
+              </a>
+            )}
+          </div>
+        )
+      }
+
+      <div class="prose-custom mt-10">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

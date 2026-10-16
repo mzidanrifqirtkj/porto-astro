@@ -38,6 +38,18 @@ function collectRoutes(dir = DIST) {
 
 const routes = collectRoutes();
 
+/**
+ * Pages to scan, as {route, file}. `dist/404.html` is deliberately not in `routes`:
+ * nothing should ever link to `/404`, so it must not be a valid link target — but its
+ * own links still need checking. It was unscanned until now, which is how four dead
+ * section anchors and two links to non-existent `/id/404/` routes went unnoticed.
+ */
+const pages = [...routes].map((route) => ({
+  route,
+  file: path.join(DIST, route, 'index.html')
+}));
+pages.push({route: '/404', file: path.join(DIST, '404.html')});
+
 /** Section ids present on each page, so `#hash` links can be checked per page. */
 function sectionIds(html) {
   return new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
@@ -45,8 +57,7 @@ function sectionIds(html) {
 
 const problems = [];
 
-for (const route of routes) {
-  const file = path.join(DIST, route, 'index.html');
+for (const {route, file} of pages) {
   if (!fs.existsSync(file)) continue;
 
   const html = fs.readFileSync(file, 'utf8');
@@ -83,4 +94,4 @@ if (problems.length > 0) {
   process.exit(1);
 }
 
-console.log(`no dead links — ${routes.size} routes scanned`);
+console.log(`no dead links — ${pages.length} pages scanned`);

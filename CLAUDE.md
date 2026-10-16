@@ -11,7 +11,6 @@ npm run build                  # astro build -> ./dist
 npm run preview                # serve the built output
 npm run check                  # astro check (TypeScript + Astro diagnostics)
 
-npm run refresh-contributions  # rebuild src/data/contributions.json from the APIs
 npm run check:links            # scan dist/ for dead internal links (run after build)
 npm run deploy                 # astro build && wrangler deploy
 ```
@@ -24,8 +23,8 @@ frontmatter passes silently, so re-check those by hand when editing project file
 
 ## What this is
 
-Bilingual (ID/EN) personal portfolio with a blog, project list and a baked GitHub + GitLab
-contribution heatmap. Static Astro output, no adapter, deployed to Cloudflare as static assets
+Bilingual (ID/EN) personal portfolio with a blog and a project list. Static Astro output, no
+adapter, deployed to Cloudflare as static assets
 (`wrangler.jsonc` serves `./dist` through the `assets` binding, `not_found_handling: 404-page`).
 It replaces an earlier Next.js 14 version of the same site.
 
@@ -37,12 +36,18 @@ MDX and sitemap integrations, fonts self-hosted via `@fontsource`, Zod 4 for col
 
 ### i18n and routing
 
-Every locale is prefixed (`/id`, `/en`); `src/pages/index.astro` just redirects `/` to `/id`.
+Every locale is prefixed (`/id`, `/en`); `src/pages/index.astro` redirects `/` to `/en` with a 301,
+which makes Astro's static redirect template emit a 0-second refresh rather than the 2-second one it
+uses for a 302. English is the default: `DEFAULT_LOCALE` in `src/i18n/ui.ts`, `i18n.defaultLocale`
+and the sitemap's `defaultLocale` in `astro.config.mjs`, `x-default` in `BaseLayout`, and the RSS
+feed all point at `en`. Change them together — a half-moved default makes the sitemap disagree with
+the redirect. The sitemap `filter` excludes `/`, which is a `noindex` redirect that parses to the
+same i18n path as `/en/` and would otherwise duplicate its alternate.
 `src/pages/[locale]/` holds the home page, `blog/` and `projects/`. Each route declares
 `getStaticPaths()` over `LOCALES` and then calls `resolveLocale(Astro.params.locale)`.
 
 UI strings live in `src/i18n/id.json` and `src/i18n/en.json`, one namespace per section
-(`Nav`, `Hero`, `About`, `Skills`, `Experience`, `Projects`, `Contributions`, `Blog`, `Meta`,
+(`Nav`, `Hero`, `About`, `Skills`, `Experience`, `Projects`, `Blog`, `Meta`,
 `Footer`, …). Components read them through `src/i18n/ui.ts`:
 
 ```ts
@@ -89,11 +94,11 @@ Adding a nav section means three coordinated edits: an entry in `NAV_SECTIONS`
 (`src/components/NavLinks.astro`), a matching `Nav` key in both locale JSON files, and an `id` on
 the section's `AnimatedSection`.
 
-**A section that hides itself must also leave the nav.** `Contributions.astro` returns `null` while
-`src/data/contributions.json` has no days, so `BaseLayout` computes `navSections` from
-`hasContributions` (`src/lib/contributions.ts`) and passes it down as `sections`; `Header` forwards
-it to both `NavLinks` instances. An unfiltered `#contributions` link would point at an anchor no page
-renders — the exact bug `npm run check:links` reports. Do the same for any new conditional section.
+**A section that hides itself must also leave the nav.** No section does this today, but if you add
+one that renders `null` conditionally, it must not keep its `NAV_SECTIONS` entry — an unfiltered
+link would point at an anchor no page renders, which is the exact bug `npm run check:links`
+reports. Filter the list in `BaseLayout` and pass it down as `sections`; `Header` forwards it to
+both `NavLinks` instances.
 
 `Header`/`NavLinks` take a `home` prop that `BaseLayout` derives from `path === ''`. On the home
 page the section anchors exist, so nav links are `#about`; on every other page they become
@@ -102,26 +107,26 @@ the header; the social icons live in the footer, since three more icons overflow
 row at `lg`. `NavLinks` and blog links appear at `lg` (64rem), so the header needs 64rem before it
 shows everything — check any new nav item against that budget.
 
-### Contribution heatmap
+### Projects
 
-`src/data/contributions.json` is committed and is the only thing the build reads.
-`scripts/fetch-contributions.mjs` regenerates it and runs daily from
-`.github/workflows/refresh-contributions.yml` (which commits the result; the push triggers the
-Cloudflare rebuild).
+Projects are a content collection. Each carries a required `date` (month precision is enough); both
+the home section (`src/components/Projects.astro`) and the full list
+(`src/pages/[locale]/projects/index.astro`) group them under year headings, newest first, with the
+year derived from the date. The sort and grouping live in `src/lib/projects.ts` — one place, so the
+two call sites cannot drift. A missing `date` fails the build rather than sorting silently. The slug
+breaks date ties, so both locales list projects in the same order even though titles differ.
 
-- GitHub needs `GH_CONTRIBUTIONS_TOKEN` (PAT with `read:user`) because `api.github.com/graphql`
-  returns limit 0 unauthenticated and the REST API cannot report contribution counts. GitLab works
-  unauthenticated via `/users?username=` then `/users/:id/events`; `GITLAB_TOKEN` only raises the
-  rate limit.
-- **On any failure the script leaves the existing JSON untouched and exits 0**, so a flaky API can
-  never break a deploy.
-- The script reads `GITHUB_USERNAME` / `GITLAB_USERNAME` out of `src/lib/social-links.ts` with a
-  regex matching `export const NAME = '...'` — keep those declarations as single-line quoted string
-  literals or the script silently reads an empty handle.
-- `GITLAB_USERNAME` is still `''`; set it before the heatmap shows GitLab data. Until the JSON has
-  days, the whole section and its nav entry stay hidden rather than showing an empty grid.
-- `ContributionHeatmap` uses 12px cells with 3px gaps (826px) so a full 53-week year fits the
-  content column (1104px) with room to spare.
+Each project also has a detail page at `src/pages/[locale]/projects/[slug].astro`, reached from the
+row title (not the whole row — the row also contains demo and GitHub anchors, and nesting anchors is
+invalid HTML). That route renders the `.mdx` body, so the body is no longer dead weight.
+
+There is no screenshot field. `src/components/ProjectRow.astro` is a text row — title, description,
+tech stack — used by both call sites.
+
+### Article typography
+
+`.prose-custom` lives in `src/styles/global.css` and is shared by the blog post route and the
+project detail route. Do not reintroduce a per-file copy.
 
 ## Conventions
 
@@ -138,6 +143,11 @@ Cloudflare rebuild).
   `IntersectionObserver`, and the page stays fully visible without JavaScript.
 - Client JavaScript is inline `<script>` inside `.astro` files, only where interaction genuinely
   needs it (nav highlighting, mobile menu, scroll-to-top).
-- `PUBLIC_SITE_URL` feeds canonical links, hreflang, the sitemap and RSS. Keep
-  `astro.config.mjs` and the fallback in `src/lib/site.ts` in sync when changing it.
-- Secrets in play: `GH_CONTRIBUTIONS_TOKEN`, optional `GITLAB_TOKEN`, optional `CF_DEPLOY_HOOK`.
+- `PUBLIC_SITE_URL` feeds canonical links, hreflang, the sitemap, RSS, `robots.txt` and the
+  `og:image` URL. Keep `astro.config.mjs` and the fallback in `src/lib/site.ts` in sync when
+  changing it. Both fall back to the production domain, so a build with no env var still emits the
+  right canonical — never let that fallback point at a host we do not own.
+- `og:image` defaults to the site-wide `public/images/og.png`. `BaseLayout` accepts an `ogImage`
+  prop (absolute URL or site-relative path) to override it per page; the blog schema exposes
+  `ogImage` for posts. The `og:image:type` / `width` / `height` tags are only emitted for the
+  default card, since dimensions are unknown for a custom image.

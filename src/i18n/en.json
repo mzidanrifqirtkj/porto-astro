@@ -11,8 +11,7 @@
     "projects": "Projects",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "blog": "Blog",
-    "contributions": "Contributions"
+    "blog": "Blog"
   },
   "Theme": {
     "toLight": "Switch to light theme",
@@ -201,16 +200,12 @@
   "Projects": {
     "heading": "Projects",
     "description": "Selected projects I have shipped — content management, healthcare systems, dashboards, and mobile apps.",
-    "empty": "No projects published yet."
-  },
-  "Contributions": {
-    "heading": "Contributions",
-    "summary": "{total} contributions in the last year ({github} GitHub · {gitlab} GitLab)",
-    "less": "Less",
-    "more": "More",
-    "github": "GitHub",
-    "gitlab": "GitLab",
-    "updatedAt": "Updated {date}"
+    "empty": "No projects published yet.",
+    "backToProjects": "← Back to projects",
+    "overview": "Overview",
+    "techStack": "Tech stack",
+    "visitDemo": "Visit demo",
+    "viewCode": "View code"
   },
   "Blog": {
     "heading": "Blog",

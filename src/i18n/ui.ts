@@ -2,7 +2,8 @@ import id from './id.json';
 import en from './en.json';
 
 export const LOCALES = ['id', 'en'] as const;
-export const DEFAULT_LOCALE = 'id';
+/** The bare domain is what gets shared, and its audience is international. */
+export const DEFAULT_LOCALE = 'en';
 
 export type Locale = (typeof LOCALES)[number];
 
